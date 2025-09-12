@@ -1,4 +1,5 @@
 class Chart < ApplicationRecord
+
 PYTHAGOREAN_NUMEROLOGY = {
 	'a' => 1, 'j' => 1, 's' => 1,
 	'b' => 2, 'k' => 2, 't' => 2,
@@ -10,6 +11,20 @@ PYTHAGOREAN_NUMEROLOGY = {
 	'h' => 8, 'q' => 8, 'z' => 8,
 	'i' => 9, 'r' => 9
 }.freeze
+
+validates :first_name, presence: true
+validates :birth_date, presence: true
+has_many :charts_numbers, dependent: :destroy
+has_many :charts, through: :charts_numbers
+
+after_save :build_numbers
+
+private
+
+def build_numbers
+life_path = Numbers::LifePathCalculator.new(chart: self).calculate
+end
+
 
 
 end

@@ -10,16 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_12_012225) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_12_051720) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "charts", force: :cascade do |t|
     t.string "first_name", null: false
-    t.string "middle_name", null: false
-    t.string "last_name", null: false
+    t.string "middle_name"
+    t.string "last_name"
     t.date "birth_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "charts_numbers", force: :cascade do |t|
+    t.bigint "chart_id", null: false
+    t.bigint "number_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chart_id"], name: "index_charts_numbers_on_chart_id"
+    t.index ["number_id"], name: "index_charts_numbers_on_number_id"
+  end
+
+  create_table "numbers", force: :cascade do |t|
+    t.integer "value", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "charts_numbers", "charts"
+  add_foreign_key "charts_numbers", "numbers"
 end

@@ -12,7 +12,7 @@
                 pattern: '^\s*\S+(\s+\S+){0,2}\s*$',
                 title: 'Please enter your first middle and last name only (up to 3 names).'
       .mb-4
-        = form.label :birthdate, 'Birthdate', class: 'block text-gray-700 font-bold mb-2'
-        = form.date_field :birthdate, class: 'shadow appearance-none border w-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+        = form.label :birth_date, 'Birthdate', class: 'block text-gray-700 font-bold mb-2'
+        = form.date_field :birth_date, class: 'shadow appearance-none border w-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
       .flex.justify-center.p-2.w-full
         = form.button 'Create Chart', type: 'submit', class: 'border border-violet-250 p-2'
