@@ -1,0 +1,18 @@
+.w-full.flex.flex-col.items-center
+  .mt-20.text-2xl.font-semibold.p-2.w-2xl.border.flex.justify-center
+    = 'New Numerology Chart'
+  .p-4.border.w-2xl.pt-20.flex.justify-center
+    = form_with model: @chart do |form|
+      .mb-4
+        = form.label :name, 'Full Name', class: 'block text-gray-700 font-bold mb-2'
+        = form.text_field :name,
+                class: 'shadow appearance-none border w-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
+                placeholder: 'First Middle Last',
+                required: true,
+                pattern: '^\s*\S+(\s+\S+){0,2}\s*$',
+                title: 'Please enter your first middle and last name (up to 3 names).'
+      .mb-4
+        = form.label :birthdate, 'Birthdate', class: 'block text-gray-700 font-bold mb-2'
+        = form.date_field :birthdate, class: 'shadow appearance-none border w-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+      .flex.justify-center.p-2.w-full
+        = form.button 'Create Chart', type: 'submit', class: 'border border-violet-250 p-2'
