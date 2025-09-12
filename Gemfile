@@ -67,3 +67,12 @@ end
 gem "slim", "~> 5.2"
 
 gem "spring", "~> 4.4"
+
+gem "dry-types", "~> 1.8"
+
+gem "dry-initializer", "~> 3.2"
+
+group :development do
+  gem "better_errors"
+  gem "binding_of_caller"
+end

@@ -33,6 +33,7 @@
     <orderEntry type="library" scope="PROVIDED" name="base64 (v0.3.0, jruby-10.0.0.1-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bcrypt_pbkdf (v1.1.1, jruby-10.0.0.1-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="benchmark (v0.4.1, jruby-10.0.0.1-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="better_errors (v2.10.1, jruby-10.0.0.1-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bindex (v0.8.1, jruby-10.0.0.1-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.3.0, jruby-10.0.0.1-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bundler (v2.6.9, jruby-10.0.0.1-p0) [gem]" level="application" />
@@ -40,8 +41,10 @@
     <orderEntry type="library" scope="PROVIDED" name="concurrent-ruby (v1.3.5, jruby-10.0.0.1-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="crass (v1.0.6, jruby-10.0.0.1-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="date (v3.4.1, jruby-10.0.0.1-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="debug_inspector (v1.2.0, jruby-10.0.0.1-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="dotenv (v3.1.8, jruby-10.0.0.1-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="drb (v2.2.3, jruby-10.0.0.1-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="dry-initializer (v3.2.0, jruby-10.0.0.1-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ed25519 (v1.4.0, jruby-10.0.0.1-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="erubi (v1.13.1, jruby-10.0.0.1-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="globalid (v1.2.1, jruby-10.0.0.1-p0) [gem]" level="application" />
