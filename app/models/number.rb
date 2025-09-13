@@ -4,4 +4,10 @@ class Number < ApplicationRecord
 
 	validates :value, presence: true
 	validates :name, presence: true
+
+	
+HUMAN_NAMES = {
+	'life_path' => 'Life Path',
+	'expression' => 'Expression'
+}
 end

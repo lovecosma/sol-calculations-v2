@@ -7,9 +7,9 @@ class ChartsController < ApplicationController
 	end
 
 	def create
-		@chart = Chart.new(**chart_params)
+		@chart = Chart.new(**permitted_params)
 		if @chart.save
-			redirect_to @chart, notice: 'Chart was successfully created.'
+			redirect_to chart_path @chart
 		else
 			render :new, status: :unprocessable_entity
 		end
@@ -18,18 +18,6 @@ class ChartsController < ApplicationController
 	private
 
 	def permitted_params
-		params.require(:chart).permit(:name, :birth_date)
-	end
-
-	def chart_params
-	{ first_name: name_splitter.first_name,
-	  middle_name: name_splitter.middle_name,
-	  last_name: name_splitter.last_name,
-	  birth_date: permitted_params[:birth_date]
-	}
-	end
-
-	def name_splitter
-		@name_splitter ||= Charts::NameSplitter.new(full_name: permitted_params[:name])
+		params.require(:chart).permit(:full_name, :birthdate)
 	end
 end
