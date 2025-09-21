@@ -32,8 +32,8 @@ module Numbers
         birthdate.year].flat_map { |part| part.to_s.chars.map(&:to_i) }
       end
 		
-      def name_to_numbers(name)
-        letter_array =  to_array_of_characters(name)
+      def string_to_numbers(string)
+        letter_array =  to_array_of_characters(string)
         letter_array.map do |letter|
           PYTHAGOREAN_NUMEROLOGY[letter]
         end
@@ -57,6 +57,10 @@ module Numbers
       
       def raw_name
         full_name.gsub(/\s+/, "")
+      end
+      
+      def filter_consonants(string)
+        string.gsub(/[aeiou]/i, '')
       end
 		end
   end

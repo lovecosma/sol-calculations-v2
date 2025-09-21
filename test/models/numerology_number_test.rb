@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ChartsNumberTest < ActiveSupport::TestCase
+class NumerologyNumberTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

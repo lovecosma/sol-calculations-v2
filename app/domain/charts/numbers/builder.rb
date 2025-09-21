@@ -10,14 +10,21 @@ module Charts
       
       CALCULATORS = {
         'life_path' => ::Numbers::Calculators::LifePath,
-        'expression' => ::Numbers::Calculators::Expression
+        'expression' => ::Numbers::Calculators::Expression,
+        'soul_urge' => ::Numbers::Calculators::SoulUrge,
+        'personality' => ::Numbers::Calculators::Personality,
+        'birthday' => ::Numbers::Calculators::Birthday
       }
       
       def run
-        CALCULATORS.each_key do |type|
-          value = calculate(type)
-          number = Number.find_or_create_by(value:, name: type)
-          ChartsNumber.find_or_create_by(chart:, number:)
+        NumberType.all.each do |type|
+          value = calculate(type.name)
+          next if value.blank?
+          number = Number.find_or_create_by(value:)
+          next if number.blank?
+          numerology_number = NumerologyNumber.find_or_create_by(number:, number_type: type)
+          next if numerology_number.blank?
+          chart.chart_numbers.find_or_create_by(numerology_number:)
         end
       end
       

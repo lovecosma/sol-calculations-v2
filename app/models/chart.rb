@@ -5,8 +5,7 @@ validates :full_name, presence: true, format: {
 	message: "must be first middle last name only"
 }
 validates :birthdate, presence: true
-has_many :charts_numbers, dependent: :destroy
-has_many :numbers, through: :charts_numbers
+has_many :chart_numbers, dependent: :destroy
 
 after_save :build_numbers
 

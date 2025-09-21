@@ -1,7 +1,9 @@
 .pt-20.px-16.w-full
   .text-2xl.font-semibold.mb-4.pb-4.border-b Your Numerology Chart
-  - @chart.numbers.each do |number|
-    .text-2xl.font-semibold.mb-4.pb-4.border-b.space-x-3
-      = Number::HUMAN_NAMES[number.name]
-      .ml-2
-        = number.value
+  - @chart.chart_numbers.each do |number|
+    .mb-4.pb-4.border-b
+      .flex
+        .text-2xl.font-semibold.space-x-3.w-fit
+          = NumberType::HUMAN_NAMES[number.name]
+          = number.value
+      = number.short_general_description
