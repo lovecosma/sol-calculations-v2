@@ -3,7 +3,7 @@ module Charts
   module Numbers
     class Builder
       extend Dry::Initializer
-      include Command
+      include ::Command
       
       option :chart
       

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_20_002317) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_20_001503) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -30,16 +30,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_002317) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "descriptions", force: :cascade do |t|
-    t.text "long"
-    t.text "short"
-    t.string "context", null: false
-    t.bigint "numerology_number_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["numerology_number_id"], name: "index_descriptions_on_numerology_number_id"
-  end
-
   create_table "number_types", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -55,6 +45,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_002317) do
   create_table "numerology_numbers", force: :cascade do |t|
     t.bigint "number_id", null: false
     t.bigint "number_type_id", null: false
+    t.text "description"
+    t.string "primary_title"
+    t.string "secondary_titles", default: [], array: true
+    t.text "core_essence", default: [], array: true
+    t.text "strengths", default: [], array: true
+    t.text "challenges", default: [], array: true
+    t.text "matches", default: [], array: true
+    t.text "mismatches", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["number_id"], name: "index_numerology_numbers_on_number_id"
@@ -63,5 +61,4 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_002317) do
 
   add_foreign_key "chart_numbers", "charts"
   add_foreign_key "chart_numbers", "numerology_numbers"
-  add_foreign_key "descriptions", "numerology_numbers"
 end
