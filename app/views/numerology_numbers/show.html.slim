@@ -21,3 +21,34 @@
       ul.px-2.space-y-3.border-b.w-8/12.py-6
         - @numerology_number.strengths.each do |essence|
           li.flex.place-content-center = essence
+
+  .mx-12
+    .text-lg.my-4.font-semibold.flex.place-content-center Challenges & Lessons
+    .w-full.flex.place-content-center.my-3
+      = image_tag "challenges.svg", width: 48, height: 48, class: "inline-block mx-2", alt: "Challenges"
+    .flex.place-content-center.w-full
+      ul.px-2.space-y-3.border-b.w-8/12.py-6
+        - @numerology_number.challenges.each do |essence|
+          li.flex.place-content-center = essence
+  .mx-12
+    .text-lg.my-4.font-semibold.flex.place-content-center Matches
+    .w-full.flex.place-content-center.my-3
+      = image_tag "matches.svg", width: 48, height: 48, class: "inline-block mx-2", alt: "Matches"
+    .flex.place-content-center.w-full
+      ul.px-2.space-y-3.border-b.w-8/12.py-6.flex.place-content-center
+        - @matches.each do |match|
+          - match_item_class = match == @matches.first ? "" : "border-l"
+          li.flex-none.px-6.py-2 class=match_item_class
+            .flex.place-content-center = "#{NumberType::HUMAN_NAMES[match.name]}: #{match.value}"
+            .flex.place-content-center = "(#{match.primary_title})"
+  .mx-12
+    .text-lg.my-4.font-semibold.flex.place-content-center Mismatches
+    .w-full.flex.place-content-center.my-3
+      = image_tag "matches.svg", width: 48, height: 48, class: "inline-block mx-2", alt: "Matches"
+    .flex.place-content-center.w-full
+      ul.px-2.space-y-3.border-b.w-8/12.py-6.flex.place-content-center
+        - @mismatches.each do |match|
+          - match_item_class = match == @mismatches.first ? "" : "border-l"
+          li.flex-none.px-6.py-2 class=match_item_class
+            .flex.place-content-center = "#{NumberType::HUMAN_NAMES[match.name]}: #{match.value}"
+            .flex.place-content-center = "(#{match.primary_title})"
