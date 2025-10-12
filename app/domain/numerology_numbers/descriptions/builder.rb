@@ -10,6 +10,7 @@ module NumerologyNumbers
         required :description, String
         required :primary_title, String
         required :secondary_titles, OpenAI::ArrayOf[String]
+        required :thumbnail_description, String
         required :core_essence, OpenAI::ArrayOf[String]
         required :strengths, OpenAI::ArrayOf[String]
         required :challenges, OpenAI::ArrayOf[String]
@@ -47,14 +48,15 @@ module NumerologyNumbers
 
           For the given number, provide content for the following fields:
 
-          1. primary_title — One powerful archetype name that defines this number’s highest expression (e.g., “The Leader”, “The Builder”, “The Visionary”).
-          2. secondary_titles — 2 to 4 alternate archetypes that reflect different facets of this number  (e.g., “The Leader”, “The Builder”, “The Visionary”).
-          3. core_essence — 2 to 4 short poetic statements summarizing its core personality, purpose, or soul frequency.
-          4. strengths — 3 to 5 statements of its greatest capabilities, gifts, or virtues.
-          5. challenges — 3 to 5 statements of its most common struggles, lessons, or pitfalls.
-          6. matches — An array of number values that naturally support or complement this number.
-          7. mismatches — An array of number values that often conflict with or challenge this number.
-          8. description — A 150 to 200 word narrative weaving together the above elements into a basic description of this numerology number.
+          1. primary_title — One powerful archetype name that defines this number's highest expression (e.g., "The Leader", "The Builder", "The Visionary").
+          2. secondary_titles — 2 to 4 alternate archetypes that reflect different facets of this number  (e.g., "The Leader", "The Builder", "The Visionary").
+          3. thumbnail_description — One concise sentence that summarizes this number's key strengths and weaknesses in a balanced way.
+          4. core_essence — 2 to 4 short poetic statements summarizing its core personality, purpose, or soul frequency.
+          5. strengths — 3 to 5 statements of its greatest capabilities, gifts, or virtues.
+          6. challenges — 3 to 5 statements of its most common struggles, lessons, or pitfalls.
+          7. matches — An array of number values that naturally support or complement this number.
+          8. mismatches — An array of number values that often conflict with or challenge this number.
+          9. description — A 150 to 200 word narrative weaving together the above elements into a basic description of this numerology number.
         CONTENT
       end
 

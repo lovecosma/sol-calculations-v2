@@ -8,5 +8,5 @@ class ChartNumber < ApplicationRecord
 	delegate :name, to: :number_type
 	delegate :value, to: :number
 
-	delegate :description, to: :numerology_number
+	delegate :description, :primary_title, to: :numerology_number
 end

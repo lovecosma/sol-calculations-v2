@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   resources :charts
-  get "numerology/:number_type/:value", to: "numerology_numbers#show", as: :numerology_number
-  
+  get '/numerology/:number_type/:value', to: "numerology_numbers#show", as: :numerology_number
+  get '/numerology/:number_type', to: "number_types#show", as: :number_type
+  # namespace "numerology" do
+  #   get ':number_type/:value', to: "numerology_numbers#show", as: :numerology_number
+  #   get ':number_type', to: "number_types#show", as: :number_type
+  # end
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

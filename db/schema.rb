@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_20_001503) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_12_204859) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -55,6 +55,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_20_001503) do
     t.text "mismatches", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "thumbnail_description"
     t.index ["number_id"], name: "index_numerology_numbers_on_number_id"
     t.index ["number_type_id"], name: "index_numerology_numbers_on_number_type_id"
   end

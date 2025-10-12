@@ -4,7 +4,11 @@
   .text-lg.flex.place-content-center.mb-12
     = @numerology_number.secondary_titles.join(', ')
 
-  .mx-12
+  .flex.place-content-center.mb-12.px-12
+    .text-base.italic.text-gray-600.text-center.max-w-2xl
+      = @numerology_number.thumbnail_description
+
+  .px-12
     .text-lg.my-4.font-semibold.flex.place-content-center Core Essence
     .w-full.flex.place-content-center.my-3
       = image_tag "core.svg", width: 48, height: 48, class: "inline-block mx-2", alt: "Core Essence"
@@ -13,7 +17,7 @@
         - @numerology_number.core_essence.each do |essence|
           li.flex.place-content-center = essence
 
-  .mx-12
+  .px-12
     .text-lg.my-4.font-semibold.flex.place-content-center Strengths
     .w-full.flex.place-content-center.my-3
       = image_tag "strengths.svg", width: 48, height: 48, class: "inline-block mx-2", alt: "Strengths"
@@ -22,7 +26,7 @@
         - @numerology_number.strengths.each do |essence|
           li.flex.place-content-center = essence
 
-  .mx-12
+  .px-12
     .text-lg.my-4.font-semibold.flex.place-content-center Challenges & Lessons
     .w-full.flex.place-content-center.my-3
       = image_tag "challenges.svg", width: 48, height: 48, class: "inline-block mx-2", alt: "Challenges"
@@ -30,8 +34,8 @@
       ul.px-2.space-y-3.border-b.w-8/12.py-6
         - @numerology_number.challenges.each do |essence|
           li.flex.place-content-center = essence
-  .mx-12
-    .text-lg.my-4.font-semibold.flex.place-content-center Matches
+  .px-12
+    .text-lg.my-4.font-semibold.flex.place-content-center Harmonious Matches
     .w-full.flex.place-content-center.my-3
       = image_tag "matches.svg", width: 48, height: 48, class: "inline-block mx-2", alt: "Matches"
     .flex.place-content-center.w-full
@@ -41,12 +45,12 @@
           li.flex-none.px-6.py-2 class=match_item_class
             .flex.place-content-center = "#{NumberType::HUMAN_NAMES[match.name]}: #{match.value}"
             .flex.place-content-center = "(#{match.primary_title})"
-  .mx-12
-    .text-lg.my-4.font-semibold.flex.place-content-center Mismatches
+  .px-12
+    .text-lg.my-4.font-semibold.flex.place-content-center Challenging Matches
     .w-full.flex.place-content-center.my-3
-      = image_tag "matches.svg", width: 48, height: 48, class: "inline-block mx-2", alt: "Matches"
+      = image_tag "mismatches.svg", width: 48, height: 48, class: "inline-block mx-2", alt: "Matches"
     .flex.place-content-center.w-full
-      ul.px-2.space-y-3.border-b.w-8/12.py-6.flex.place-content-center
+      ul.px-2.space-y-3.w-8/12.py-6.flex.place-content-center
         - @mismatches.each do |match|
           - match_item_class = match == @mismatches.first ? "" : "border-l"
           li.flex-none.px-6.py-2 class=match_item_class

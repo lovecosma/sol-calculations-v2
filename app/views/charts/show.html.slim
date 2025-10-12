@@ -2,8 +2,7 @@
   .text-2xl.font-semibold.mb-4.pb-4.border-b Your Numerology Chart
   - @chart.chart_numbers.each do |number|
     .mb-4.pb-4.border-b
-      .flex
-        .text-2xl.font-semibold.space-x-3.w-fit
-          = NumberType::HUMAN_NAMES[number.name]
-          = number.value
+      = link_to numerology_number_path(number_type: number.name, value: number.value) do
+        .text-2xl.font-semibold.my-2
+          = "#{NumberType::HUMAN_NAMES[number.name]}: #{number.value} #{number.primary_title}"
       = number.description
