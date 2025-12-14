@@ -1,0 +1,22 @@
+.w-full.flex.flex-col.items-center
+  .mt-20.text-2xl.font-semibold.p-2.w-2xl.border.flex.justify-center Log in
+  .p-4.border.w-2xl.pt-10.flex.justify-center
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .mb-4
+        = f.label :email, class: 'block text-gray-700 font-bold mb-2'
+        = f.email_field :email, autofocus: true, autocomplete: "email", class: 'shadow appearance-none border w-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+
+      .mb-4
+        = f.label :password, class: 'block text-gray-700 font-bold mb-2'
+        = f.password_field :password, autocomplete: "current-password", class: 'shadow appearance-none border w-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+
+      - if devise_mapping.rememberable?
+        .mb-4.flex.items-center
+          = f.check_box :remember_me, class: 'mr-2'
+          = f.label :remember_me, class: 'text-gray-700'
+
+      .flex.justify-center.p-2.w-full
+        = f.submit "Log in", class: 'border border-violet-250 p-2'
+
+  .mt-4
+    = render "devise/shared/links"

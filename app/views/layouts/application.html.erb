@@ -24,6 +24,12 @@
 
   <body class="font-quicksand">
     <%= render 'shared/nav' %>
+    <% if notice %>
+      <p class="w-full notice"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="w-full alert"><%= alert %></p>
+    <% end %>
     <%= yield %>
   </body>
 </html>

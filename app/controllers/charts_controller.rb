@@ -1,13 +1,20 @@
 class ChartsController < ApplicationController
+	before_action :authenticate_user!, except: [:show]
+
+	def index
+		@charts = current_user.charts.order(created_at: :desc)
+	end
+
 	def show
 		@chart = Chart.find(params[:id])
 	end
+
 	def new
 		@chart = Chart.new
 	end
 
 	def create
-		@chart = Chart.new(**permitted_params)
+		@chart = current_user.charts.build(**permitted_params)
 		if @chart.save
 			redirect_to chart_path @chart
 		else
@@ -18,6 +25,6 @@ class ChartsController < ApplicationController
 	private
 
 	def permitted_params
-		params.require(:chart).permit(:full_name, :birthdate)
+		params.require(:chart).permit(:full_name, :birthdate, :user_id)
 	end
 end

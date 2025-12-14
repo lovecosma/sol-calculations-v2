@@ -18,3 +18,10 @@ nav.border-b
       ul.font-medium.flex.space-x-8.p-4.md:p-0.mt-4.rounded-lg
         = render "shared/nav_link", value: "Home", href: root_path
         = render "shared/nav_link", value: "Calculator", href: new_chart_path
+        - if user_signed_in?
+          = render "shared/nav_link", value: "My Charts", href: charts_path
+          li
+            = button_to "Log out", destroy_user_session_path, method: :delete, class: "block hover:text-yellow-100 px-3", form: { class: "inline" }
+        - else
+          = render "shared/nav_link", value: "Log in", href: new_user_session_path
+          = render "shared/nav_link", value: "Sign up", href: new_user_registration_path
