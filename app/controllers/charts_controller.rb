@@ -22,6 +22,19 @@ class ChartsController < ApplicationController
 		end
 	end
 
+	def edit
+		@chart = Chart.find(params[:id])
+	end
+
+	def update
+		@chart = Chart.find(params[:id])
+		if @chart.update(**permitted_params)
+			redirect_to chart_path @chart
+		else
+			render :edit, status: :unprocessable_entity
+		end
+	end
+
 	private
 
 	def permitted_params
