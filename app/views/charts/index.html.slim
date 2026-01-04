@@ -1,24 +1,26 @@
-.pt-20.px-16.w-full
-  .text-2xl.font-semibold.mb-4.pb-4.border-b My Charts
-
+.pt-20.px-16.w-full.items-center
+  .w-full.flex.justify-between.border-b.mb-4.p-4
+    .text-2xl.font-semibold My Charts
+    = link_to "+ Create a new chart", new_chart_path, class: "text-blue-600 hover:underline"
   - if @charts.any?
     .space-y-4
       - @charts.each do |chart|
         = link_to chart_path(chart) do
           .border.rounded-lg.p-4.hover:bg-gray-50
             .flex.items-center.justify-between.gap-8
-              .flex-shrink-0
+              .flex-shrink-0.w-max
                 .text-xl.font-semibold.mb-1 = chart.full_name
                 .text-gray-600
                   | Birthdate:
                   = chart.birthdate.strftime("%B %d, %Y")
-              .flex.gap-8.flex-1.justify-center
+              .flex.justify-between.w-full
                 - chart.chart_numbers.each do |number|
-                  = link_to numerology_number_path(number_type: number.name, value: number.value), class: "hover:underline" do
-                    .text-center
-                      .text-xs.text-gray-500 = NumberType::HUMAN_NAMES[number.name]
-                      .text-lg.font-semibold = number.value
-              .flex.gap-4.flex-shrink-0
+                  .w-full.flex.justify-center
+                    = link_to numerology_number_path(number_type: number.name, value: number.value), class: "hover:underline" do
+                      .text-center
+                        .text-xs.text-gray-500 = NumberType::HUMAN_NAMES[number.name]
+                        .text-lg.font-semibold = number.value
+              .flex.gap-8.flex-shrink-0
                 = link_to "View", chart_path(chart), class: "text-blue-600 hover:underline"
                 = link_to "Edit", edit_chart_path(chart), class: "text-blue-600 hover:underline"
                 = link_to "Delete", chart_path(chart), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:underline"

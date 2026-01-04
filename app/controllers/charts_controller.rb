@@ -34,6 +34,12 @@ class ChartsController < ApplicationController
 			render :edit, status: :unprocessable_entity
 		end
 	end
+	
+	def destroy
+		@chart = Chart.find(params[:id])
+		@chart.destroy
+		redirect_to charts_path, notice: "Chart deleted successfully."
+	end
 
 	private
 
