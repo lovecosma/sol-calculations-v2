@@ -81,6 +81,6 @@ group :development do
 end
 gem "pry", "~> 0.15.2"
 
-gem "openai", "~> 0.23.2"
+gem "openai", "~> 0.34.1"
 
 gem "dotenv", "~> 3.1"
