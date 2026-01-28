@@ -21,9 +21,9 @@ module Charts
           value = calculate(type.name)
           next if value.blank?
           number = Number.find_or_create_by(value:)
-          next if number.blank?
+          next if number.blank? || !number.persisted?
           numerology_number = NumerologyNumber.find_or_create_by(number:, number_type: type)
-          next if numerology_number.blank?
+          next if numerology_number.blank? || !numerology_number.persisted?
           chart.chart_numbers.find_or_create_by(numerology_number:)
         end
       end
