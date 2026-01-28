@@ -1,6 +1,7 @@
 class NumerologyNumber < ApplicationRecord
 	belongs_to :number
 	belongs_to :number_type
+	has_many :chart_numbers, dependent: :destroy
 
 	# thumbnail_description is generated asynchronously by NumerologyNumbers::Descriptions::Builder
 	# validates :thumbnail_description, presence: true

@@ -74,7 +74,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_14_014115) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "chart_numbers", "charts"
-  add_foreign_key "chart_numbers", "numerology_numbers"
-  add_foreign_key "charts", "users"
+  add_foreign_key "chart_numbers", "charts", on_delete: :cascade
+  add_foreign_key "chart_numbers", "numerology_numbers", on_delete: :cascade
+  add_foreign_key "charts", "users", on_delete: :cascade
+  add_foreign_key "numerology_numbers", "number_types", on_delete: :restrict
+  add_foreign_key "numerology_numbers", "numbers", on_delete: :restrict
 end
