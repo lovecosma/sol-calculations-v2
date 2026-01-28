@@ -7,7 +7,15 @@ module NumerologyNumbers
   module Descriptions
     class Builder
       class NumerologyNumberDescription < OpenAI::BaseModel
+        required :primary_title, String
+        required :secondary_titles, OpenAI::ArrayOf[String]
         required :thumbnail_description, String
+        required :core_essence, OpenAI::ArrayOf[String]
+        required :strengths, OpenAI::ArrayOf[String]
+        required :challenges, OpenAI::ArrayOf[String]
+        required :matches, OpenAI::ArrayOf[Integer]
+        required :mismatches, OpenAI::ArrayOf[Integer]
+        required :description, String
       end
 
       include Command
@@ -49,8 +57,6 @@ module NumerologyNumbers
           7. matches — An array of number values that naturally support or complement this number.
           8. mismatches — An array of number values that often conflict with or challenge this number.
           9. description — A 150 to 200 word narrative weaving together the above elements into a basic description of this numerology number.
-
-          For now, only return the thumbnail_description.
         CONTENT
       end
 
