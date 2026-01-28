@@ -1,6 +1,4 @@
 class ChartsController < ApplicationController
-	before_action :authenticate_user!, except: [:show]
-
 	def index
 		@charts = current_user.charts.order(created_at: :desc)
 	end
