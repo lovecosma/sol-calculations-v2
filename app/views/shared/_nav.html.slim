@@ -20,8 +20,7 @@ nav.border-b data-controller="navbar"
         = render "shared/nav_link", value: "Calculator", href: new_chart_path
         - if user_signed_in?
           = render "shared/nav_link", value: "My Charts", href: charts_path
-          li
-            = button_to "Log out", destroy_user_session_path, method: :delete, class: "block hover:text-yellow-100 px-3 py-2", form: { class: "inline" }
+          = render "shared/nav_link", value: "Log out", href: destroy_user_session_path, method: :delete
         - else
           = render "shared/nav_link", value: "Log in", href: new_user_session_path
           = render "shared/nav_link", value: "Sign up", href: new_user_registration_path
