@@ -12,11 +12,11 @@
             - if @minimum_password_length
               em.text-sm.font-normal.text-gray-600
                 = " (#{@minimum_password_length} characters minimum)"
-          = f.password_field :password, autofocus: true, autocomplete: "new-password", class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-violet-500'
+          = f.password_field :password, autofocus: true, autocomplete: "new-password", required: true, minlength: @minimum_password_length || 6, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-violet-500'
 
         .mb-6
           = f.label :password_confirmation, "Confirm new password", class: 'block text-gray-700 font-bold mb-2'
-          = f.password_field :password_confirmation, autocomplete: "new-password", class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-violet-500'
+          = f.password_field :password_confirmation, autocomplete: "new-password", required: true, minlength: @minimum_password_length || 6, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-violet-500'
 
         .flex.justify-center
           = f.submit "Change my password", class: 'w-full md:w-auto border border-violet-500 bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline transition-colors'
