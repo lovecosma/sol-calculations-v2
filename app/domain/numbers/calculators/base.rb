@@ -40,7 +40,9 @@ module Numbers
       end
       
       def to_array_of_characters(value)
-        value.gsub(/\s+/, "").downcase.split("")
+        # Remove all non-letter characters (spaces, hyphens, apostrophes, periods)
+        # and convert to lowercase for numerology calculation
+        value.gsub(/[^A-Za-z]/, "").downcase.split("")
       end
 		
       def reduce_to_single_digit(array_of_numbers)
@@ -56,7 +58,9 @@ module Numbers
       end
       
       def raw_name
-        full_name.gsub(/\s+/, "")
+        # Remove all non-letter characters for numerology calculation
+        # "Mary-Jane O'Connor" → "MaryJaneOConnor"
+        full_name.gsub(/[^A-Za-z]/, "")
       end
       
       def filter_consonants(string)
