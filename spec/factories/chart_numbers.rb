@@ -1,8 +1,17 @@
 FactoryBot.define do
   factory :chart_number do
     association :chart
-    number_type { 'life_path' }
-    value { rand(1..9) }
+
+    transient do
+      number_type { 'life_path' }
+      value { rand(1..9) }
+    end
+
+    numerology_number do
+      num_type = NumberType.find_or_create_by!(name: number_type)
+      num = Number.find_or_create_by!(value: value)
+      NumerologyNumber.find_or_create_by!(number: num, number_type: num_type)
+    end
 
     trait :life_path do
       number_type { 'life_path' }

@@ -4,7 +4,7 @@ class ChartsController < ApplicationController
 	end
 
 	def show
-		@chart = Chart.find(params[:id])
+		@chart = current_user.charts.find(params[:id])
 	end
 
 	def new
@@ -21,11 +21,11 @@ class ChartsController < ApplicationController
 	end
 
 	def edit
-		@chart = Chart.find(params[:id])
+		@chart = current_user.charts.find(params[:id])
 	end
 
 	def update
-		@chart = Chart.find(params[:id])
+		@chart = current_user.charts.find(params[:id])
 		if @chart.update(**permitted_params)
 			redirect_to chart_path @chart
 		else
@@ -34,7 +34,7 @@ class ChartsController < ApplicationController
 	end
 	
 	def destroy
-		@chart = Chart.find(params[:id])
+		@chart = current_user.charts.find(params[:id])
 		@chart.destroy
 		redirect_to charts_path, notice: "Chart deleted successfully."
 	end
