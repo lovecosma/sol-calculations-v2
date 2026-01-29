@@ -1,18 +1,19 @@
-.w-full.flex.flex-col.items-center
-  .mt-20.text-2xl.font-semibold.p-2.w-2xl.border.flex.justify-center Edit Numerology Chart
-  .p-4.border.w-2xl.pt-10.flex.justify-center
-    = form_with model: @chart do |form|
-      .mb-4
-        = form.label :full_name, 'Full Name', class: 'block text-gray-700 font-bold mb-2'
-        = form.text_field :full_name,
-                          class: 'shadow appearance-none border w-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
-                          placeholder: 'First Middle Last',
-                          required: true,
-                          pattern: '^\s*\S+(?:\s+\S+){0,2}\s*$',
-                          title: 'Please enter your first middle and last name only (up to 3 names).'
-      .mb-4
-        = form.label :birthdate, 'Birthdate', class: 'block text-gray-700 font-bold mb-2'
-        = form.date_field :birthdate, class: 'shadow appearance-none border w-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-        = form.hidden_field :user_id , value: current_user.id
-      .flex.justify-center.p-2.w-full
-        = form.button 'Update Chart', type: 'submit', class: 'border border-violet-250 p-2'
+.w-full.flex.flex-col.items-center.px-4
+  .mt-8.md:mt-20.w-full.max-w-md
+    .text-2xl.font-semibold.p-4.border.flex.justify-center Edit Numerology Chart
+    .p-10.md:p-12.border.border-t-0
+      = form_with model: @chart, class: 'w-full' do |form|
+        .mb-6
+          = form.label :full_name, 'Full Name', class: 'block text-gray-700 font-bold mb-2'
+          = form.text_field :full_name,
+                            class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-violet-500',
+                            placeholder: 'First Middle Last',
+                            required: true,
+                            pattern: '^\s*\S+(?:\s+\S+){0,2}\s*$',
+                            title: 'Please enter your first middle and last name only (up to 3 names).'
+        .mb-6
+          = form.label :birthdate, 'Birthdate', class: 'block text-gray-700 font-bold mb-2'
+          = form.date_field :birthdate, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-violet-500'
+          = form.hidden_field :user_id , value: current_user.id
+        .flex.justify-center
+          = form.button 'Update Chart', type: 'submit', class: 'w-full md:w-auto border border-violet-500 bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline transition-colors'

@@ -29,7 +29,7 @@ def name_parts
 end
 
 def build_numbers
-Charts::Numbers::Builder.run(chart: self)
+	Charts::Numbers::Builder.run(chart: self)
 end
 
 end

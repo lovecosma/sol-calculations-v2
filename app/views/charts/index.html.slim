@@ -1,29 +1,32 @@
-.pt-20.px-16.w-full.items-center
-  .w-full.flex.justify-between.border-b.mb-4.p-4
+.pt-8.md:pt-20.px-4.md:px-16.w-full.items-center
+  .w-full.flex.flex-col.md:flex-row.md:justify-between.border-b.mb-4.p-4.gap-4
     .text-2xl.font-semibold My Charts
-    = link_to "+ Create a new chart", new_chart_path, class: "text-blue-600 hover:underline"
+    = link_to "+ Create a new chart", new_chart_path, class: "text-blue-600 hover:underline text-center md:text-left"
   - if @charts.any?
     .space-y-4
       - @charts.each do |chart|
-        = link_to chart_path(chart) do
-          .border.rounded-lg.p-4.hover:bg-gray-50
-            .flex.items-center.justify-between.gap-8
-              .flex-shrink-0.w-max
+        .border.rounded-lg.p-4.md:p-6.hover:bg-gray-50.transition-colors
+          .flex.flex-col.gap-4
+            / Chart info section
+            .flex.flex-col.md:flex-row.md:items-center.md:justify-between.gap-4
+              div
                 .text-xl.font-semibold.mb-1 = chart.full_name
-                .text-gray-600
+                .text-sm.md:text-base.text-gray-600
                   | Birthdate:
+                  = " "
                   = chart.birthdate.strftime("%B %d, %Y")
-              .flex.justify-between.w-full
-                - chart.chart_numbers.each do |number|
-                  .w-full.flex.justify-center
-                    = link_to numerology_number_path(number_type: number.name, value: number.value), class: "hover:underline" do
-                      .text-center
-                        .text-xs.text-gray-500 = NumberType::HUMAN_NAMES[number.name]
-                        .text-lg.font-semibold = number.value
-              .flex.gap-8.flex-shrink-0
-                = link_to "View", chart_path(chart), class: "text-blue-600 hover:underline"
-                = link_to "Edit", edit_chart_path(chart), class: "text-blue-600 hover:underline"
-                = link_to "Delete", chart_path(chart), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:underline"
+              .flex.gap-4.md:gap-8.flex-wrap.md:flex-nowrap.justify-center.md:justify-end
+                = link_to "View", chart_path(chart), class: "text-blue-600 hover:underline whitespace-nowrap"
+                = link_to "Edit", edit_chart_path(chart), class: "text-blue-600 hover:underline whitespace-nowrap"
+                = link_to "Delete", chart_path(chart), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:underline whitespace-nowrap"
+
+            / Numbers section - scrollable on mobile
+            .lg:flex.gap-4.overflow-x-auto.pb-2.-mx-2.px-2.md:mx-0.md:px-0.md:justify-center
+              - chart.chart_numbers.each do |number|
+                = link_to numerology_number_path(number_type: number.name, value: number.value), class: "hover:underline flex-shrink-0" do
+                  .text-center.px-3.py-2.border.rounded-lg.hover:bg-gray-100.transition-colors.min-w-[80px]
+                    .text-xs.text-gray-500.mb-1 = NumberType::HUMAN_NAMES[number.name]
+                    .text-lg.font-semibold = number.value
   - else
     .text-center.py-8
       .text-gray-500.mb-4 You haven't created any charts yet.

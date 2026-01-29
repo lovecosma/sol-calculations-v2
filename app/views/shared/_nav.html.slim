@@ -1,27 +1,27 @@
-nav.border-b
+nav.border-b data-controller="navbar"
   .max-w-screen-xl.flex.flex-wrap.items-center.justify-between.mx-auto.p-2.mb-2
     = link_to root_path, class: "flex items-center space-x-3 rtl:space-x-reverse"
       span.self-center.text-2xl.font-semibold.whitespace-nowrap
         = image_tag 'sol.svg', alt: 'Logo'
 
     button.inline-flex.items-center.p-2.w-10.h-10.justify-center.text-sm.text-gray-500.rounded-lg.md:hidden.hover:bg-gray-100.focus:outline-none.focus:ring-2.focus:ring-gray-200.dark:text-gray-400.dark:hover:bg-gray-700.dark:focus:ring-gray-600[
-      data-collapse-toggle="navbar-default"
+      data-action="click->navbar#toggle"
       type="button"
-      aria-controls="navbar-default"
+      aria-controls="navbar-menu"
       aria-expanded="false"
     ]
       span.sr-only Open main menu
       svg.w-5.h-5 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14"
         path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"
 
-    .hidden.w-full.md:block.md:w-auto
-      ul.font-medium.flex.space-x-8.p-4.md:p-0.mt-4.rounded-lg
+    .hidden.w-full.md:block.md:w-auto data-navbar-target="menu"
+      ul.font-medium.flex.flex-col.md:flex-row.md:space-x-8.p-4.md:p-0.mt-4.md:mt-0.border.md:border-0.rounded-lg
         = render "shared/nav_link", value: "Home", href: root_path
         = render "shared/nav_link", value: "Calculator", href: new_chart_path
         - if user_signed_in?
           = render "shared/nav_link", value: "My Charts", href: charts_path
           li
-            = button_to "Log out", destroy_user_session_path, method: :delete, class: "block hover:text-yellow-100 px-3", form: { class: "inline" }
+            = button_to "Log out", destroy_user_session_path, method: :delete, class: "block hover:text-yellow-100 px-3 py-2", form: { class: "inline" }
         - else
           = render "shared/nav_link", value: "Log in", href: new_user_session_path
           = render "shared/nav_link", value: "Sign up", href: new_user_registration_path

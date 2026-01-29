@@ -1,26 +1,24 @@
-.w-full.flex.flex-col.items-center
-  .mt-20.text-2xl.font-semibold.p-2.w-2xl.border.flex.justify-center Sign up
-  .p-4.border.w-2xl.pt-10.flex.justify-center
-    = form_for(resource, as: resource_name, url: registration_path(resource_name), class: 'w-full flex justify-center') do |f|
-      = render "devise/shared/error_messages", resource: resource
-      .mb-4.w-full.flex.justify-center.flex-row
-        div
-          = f.label :email, class: 'block text-gray-700 font-bold mb-2 w-fit'
-          = f.email_field :email, autofocus: true, autocomplete: "email", class: 'shadow appearance-none border w-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-      .mb-4.w-full.flex.justify-center.flex-row
-        div
-          .block.text-gray-700.font-bold.mb-2.w-fit
+.w-full.flex.flex-col.items-center.px-4
+  .mt-8.md:mt-20.w-full.max-w-md
+    .text-2xl.font-semibold.p-4.border.flex.justify-center Sign up
+    .p-10.md:p-12.border.border-t-0
+      = form_for(resource, as: resource_name, url: registration_path(resource_name), class: 'w-full') do |f|
+        = render "devise/shared/error_messages", resource: resource
+        .mb-6
+          = f.label :email, class: 'block text-gray-700 font-bold mb-2'
+          = f.email_field :email, autofocus: true, autocomplete: "email", class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-violet-500'
+        .mb-6
+          .block.text-gray-700.font-bold.mb-2
             = f.label :password
             - if @minimum_password_length
-              em
+              em.text-sm.font-normal.text-gray-600
                 |  (#{@minimum_password_length} characters minimum)
-          = f.password_field :password, autocomplete: "new-password", class: 'shadow appearance-none border w-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-      .mb-4.w-full.flex.justify-center.flex-row
-        div
-          = f.label :password_confirmation, class: 'block text-gray-700 font-bold mb-2 w-fit'
-          = f.password_field :password_confirmation, autocomplete: "new-password", class: 'shadow appearance-none border w-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-      .p-2.w-full.flex.justify-center.flex-row
-        = f.submit "Sign up", class: 'border border-violet-250 p-2'
+          = f.password_field :password, autocomplete: "new-password", class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-violet-500'
+        .mb-6
+          = f.label :password_confirmation, class: 'block text-gray-700 font-bold mb-2'
+          = f.password_field :password_confirmation, autocomplete: "new-password", class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-violet-500'
+        .flex.justify-center
+          = f.submit "Sign up", class: 'w-full md:w-auto border border-violet-500 bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline transition-colors'
 
-  .mt-4
-    = render "devise/shared/links"
+    .mt-4.text-center
+      = render "devise/shared/links"
