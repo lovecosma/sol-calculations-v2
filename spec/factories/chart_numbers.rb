@@ -7,10 +7,13 @@ FactoryBot.define do
       value { rand(1..9) }
     end
 
-    numerology_number do
-      num_type = NumberType.find_or_create_by!(name: number_type)
-      num = Number.find_or_create_by!(value: value)
-      NumerologyNumber.find_or_create_by!(number: num, number_type: num_type)
+    after(:build) do |chart_number, evaluator|
+      # Efficiently create the association chain: NumberType -> Number -> NumerologyNumber
+      chart_number.numerology_number ||= begin
+        num_type = NumberType.find_or_create_by!(name: evaluator.number_type)
+        num = Number.find_or_create_by!(value: evaluator.value)
+        NumerologyNumber.find_or_create_by!(number: num, number_type: num_type)
+      end
     end
 
     trait :life_path do
@@ -27,6 +30,11 @@ FactoryBot.define do
 
     trait :personality do
       number_type { 'personality' }
+    end
+
+    trait :birthday do
+      number_type { 'birthday' }
+      value { rand(1..31) }
     end
   end
 end

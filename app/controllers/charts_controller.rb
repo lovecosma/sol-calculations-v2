@@ -42,6 +42,6 @@ class ChartsController < ApplicationController
 	private
 
 	def permitted_params
-		params.require(:chart).permit(:full_name, :birthdate, :user_id)
+		params.require(:chart).permit(:full_name, :birthdate)
 	end
 end

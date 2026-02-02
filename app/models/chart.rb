@@ -6,7 +6,7 @@ validates :birthdate, presence: true
 validate :validate_full_name_format
 has_many :chart_numbers, dependent: :destroy
 
-after_save :build_numbers
+after_commit :build_numbers, on: [:create, :update], if: :should_build_numbers?
 
 def first_name
 name_parts.first
@@ -49,6 +49,11 @@ end
 def name_parts
 	# Split by spaces, but keep hyphens and apostrophes as part of names
 	@name_parts ||= full_name.strip.split(/\s+/).reject(&:blank?)
+end
+
+def should_build_numbers?
+	# Build numbers on create, or on update if name or birthdate changed
+	saved_change_to_full_name? || saved_change_to_birthdate?
 end
 
 def build_numbers
