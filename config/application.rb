@@ -23,5 +23,27 @@ module SolCalculations
     #
     # config.time_zone = "Central Time (US & Canada)"
     config.eager_load_paths << Rails.root.join("domain")
+
+    # Validate required environment variables after initialization
+    config.after_initialize do
+      # Skip validation in asset precompilation and db tasks
+      next if defined?(Rails::Console) || File.split($0).last == 'rake'
+
+      required_env_vars = {
+        'OPEN_AI_SECRET_KEY' => 'OpenAI API key for generating numerology descriptions'
+      }
+
+      missing_vars = required_env_vars.select { |key, _| ENV[key].blank? }
+
+      if missing_vars.any?
+        error_message = "Missing required environment variables:\n"
+        missing_vars.each do |key, description|
+          error_message += "  - #{key}: #{description}\n"
+        end
+        error_message += "\nPlease set these variables in your .env file or environment."
+
+        raise error_message
+      end
+    end
   end
 end
