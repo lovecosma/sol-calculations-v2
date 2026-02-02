@@ -38,7 +38,28 @@ Number.where(value: (1..31).to_a).each do |number|
 	NumerologyNumber.find_or_create_by(number_type: birthday_type, number:)
 end
 puts "Seeded NumerologyNumber records."
-NumerologyNumber.all.each do |numerology_number|
-	NumerologyNumbers::Descriptions::Builder.run(numerology_number:)
+
+# Generate AI descriptions for all numerology numbers
+total = NumerologyNumber.count
+success_count = 0
+failure_count = 0
+
+puts "Generating AI descriptions for #{total} numerology numbers (this may take several minutes)..."
+
+NumerologyNumber.all.each_with_index do |numerology_number, index|
+	begin
+		NumerologyNumbers::Descriptions::Builder.run(numerology_number:)
+		success_count += 1
+		print "." if (index + 1) % 10 == 0
+	rescue NumerologyNumbers::Descriptions::Builder::OpenAIError => e
+		failure_count += 1
+		puts "\nFailed to generate description for #{numerology_number.number_type.name} #{numerology_number.number.value}: #{e.message}"
+	rescue StandardError => e
+		failure_count += 1
+		puts "\nUnexpected error for #{numerology_number.number_type.name} #{numerology_number.number.value}: #{e.class} - #{e.message}"
+	end
 end
-puts "Seeding completed."
+
+puts "\n\nSeeding completed."
+puts "Successfully generated #{success_count} descriptions"
+puts "Failed to generate #{failure_count} descriptions" if failure_count > 0

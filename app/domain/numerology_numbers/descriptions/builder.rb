@@ -22,15 +22,51 @@ module NumerologyNumbers
       extend Dry::Initializer
       option :numerology_number
 
+      # Custom error class for better error tracking
+      class OpenAIError < StandardError; end
+
+      MAX_RETRIES = 3
+      RETRY_DELAY = 2 # seconds
+      REQUEST_TIMEOUT = 30 # seconds
+
       def run
-        return if parsed_response.blank?
-        numerology_number.update(parsed_response)
+        response_data = fetch_description_with_retry
+        return unless response_data
+
+        numerology_number.update(response_data)
+      rescue OpenAIError => e
+        Rails.logger.error("OpenAI API error for numerology_number #{numerology_number.id}: #{e.message}")
+        # Re-raise so caller can handle or queue for retry
+        raise
+      rescue StandardError => e
+        Rails.logger.error("Unexpected error generating description for numerology_number #{numerology_number.id}: #{e.class} - #{e.message}")
+        Rails.logger.error(e.backtrace.first(5).join("\n"))
+        raise
       end
 
       private
 
+      def fetch_description_with_retry
+        retries = 0
+        begin
+          parsed_response
+        rescue JSON::ParserError, OpenAI::Error => e
+          retries += 1
+          if retries <= MAX_RETRIES
+            Rails.logger.warn("Retry #{retries}/#{MAX_RETRIES} for numerology_number #{numerology_number.id} after error: #{e.message}")
+            sleep(RETRY_DELAY * retries) # Exponential backoff
+            retry
+          else
+            raise OpenAIError, "Failed after #{MAX_RETRIES} retries: #{e.message}"
+          end
+        end
+      end
+
       def client
-        @client ||= OpenAI::Client.new(api_key: ENV["OPEN_AI_SECRET_KEY"])
+        @client ||= OpenAI::Client.new(
+          api_key: ENV["OPEN_AI_SECRET_KEY"],
+          request_timeout: REQUEST_TIMEOUT
+        )
       end
 
       def content
@@ -61,6 +97,8 @@ module NumerologyNumbers
       end
 
       def response
+        Rails.logger.info("Requesting OpenAI description for numerology_number #{numerology_number.id} (#{numerology_number.number_type.name} #{numerology_number.number.value})")
+
         client.responses.create(
           model: "gpt-5-nano",
           input: [
@@ -69,14 +107,38 @@ module NumerologyNumbers
           ],
           text: NumerologyNumberDescription
         )
+      rescue OpenAI::Error => e
+        raise OpenAIError, "OpenAI API request failed: #{e.message}"
+      rescue StandardError => e
+        raise OpenAIError, "Unexpected error during API request: #{e.class} - #{e.message}"
       end
 
       def parsed_response
-        @parsed_response ||= JSON.parse(response_text) rescue {}
+        return @parsed_response if defined?(@parsed_response)
+
+        text = response_text
+
+        if text.blank?
+          Rails.logger.error("Empty response from OpenAI for numerology_number #{numerology_number.id}")
+          raise OpenAIError, "Empty response from OpenAI API"
+        end
+
+        @parsed_response = JSON.parse(text)
+      rescue JSON::ParserError => e
+        Rails.logger.error("Failed to parse OpenAI response for numerology_number #{numerology_number.id}: #{e.message}")
+        Rails.logger.error("Response text: #{text}")
+        raise
       end
 
       def response_text
-        response&.output&.last&.content&.first&.text
+        api_response = response
+        text = api_response&.output&.last&.content&.first&.text
+
+        unless text
+          raise OpenAIError, "Invalid response structure from OpenAI API"
+        end
+
+        text
       end
     end
   end
