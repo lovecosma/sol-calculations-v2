@@ -8,13 +8,21 @@ class NumerologyNumbersController < ApplicationController
 	private
 
 	def set_numerology_number
-		@number = Number.find_by(value: params[:value])
-		@number_type = NumberType.find_by(name: params[:number_type])
-		@numerology_number = NumerologyNumber.find_by(number: @number, number_type: @number_type)
+		@numerology_number = NumerologyNumber
+			.joins(:number, :number_type)
+			.includes(:number, :number_type)
+			.find_by(
+				numbers: { value: params[:value] },
+				number_types: { name: params[:number_type] }
+			)
 
 		if @numerology_number.blank?
 			render plain: "Numerology number not found", status: :not_found
+			return
 		end
+
+		@number = @numerology_number.number
+		@number_type = @numerology_number.number_type
 	end
 
 	def set_matches_and_mismatches

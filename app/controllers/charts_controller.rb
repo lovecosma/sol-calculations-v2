@@ -1,10 +1,14 @@
 class ChartsController < ApplicationController
 	def index
-		@charts = current_user.charts.order(created_at: :desc)
+		@charts = current_user.charts
+			.includes(chart_numbers: { numerology_number: [:number_type, :number] })
+			.order(created_at: :desc)
 	end
 
 	def show
-		@chart = current_user.charts.find(params[:id])
+		@chart = current_user.charts
+			.includes(chart_numbers: { numerology_number: [:number_type, :number] })
+			.find(params[:id])
 	end
 
 	def new
