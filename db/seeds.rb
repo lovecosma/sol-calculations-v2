@@ -39,27 +39,14 @@ Number.where(value: (1..31).to_a).each do |number|
 end
 puts "Seeded NumerologyNumber records."
 
-# Generate AI descriptions for all numerology numbers
 total = NumerologyNumber.count
-success_count = 0
-failure_count = 0
 
-puts "Generating AI descriptions for #{total} numerology numbers (this may take several minutes)..."
+puts "Enqueuing #{total} jobs to generate AI descriptions..."
 
-NumerologyNumber.all.each_with_index do |numerology_number, index|
-	begin
-		NumerologyNumbers::Descriptions::Builder.run(numerology_number:)
-		success_count += 1
-		print "." if (index + 1) % 10 == 0
-	rescue NumerologyNumbers::Descriptions::Builder::OpenAIError => e
-		failure_count += 1
-		puts "\nFailed to generate description for #{numerology_number.number_type.name} #{numerology_number.number.value}: #{e.message}"
-	rescue StandardError => e
-		failure_count += 1
-		puts "\nUnexpected error for #{numerology_number.number_type.name} #{numerology_number.number.value}: #{e.class} - #{e.message}"
-	end
+NumerologyNumber.all.each do |numerology_number|
+	GenerateNumerologyDescriptionJob.perform_later(numerology_number)
 end
 
 puts "\n\nSeeding completed."
-puts "Successfully generated #{success_count} descriptions"
-puts "Failed to generate #{failure_count} descriptions" if failure_count > 0
+puts "Enqueued #{total} jobs to generate descriptions."
+puts "Jobs will be processed by the background worker with automatic retries on failure."
