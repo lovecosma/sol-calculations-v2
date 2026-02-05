@@ -4,9 +4,8 @@ module Numbers
 	module Calculators
 		class Birthday < Base
 			def run
-				birthday_array = birthdate.day.to_s.chars.map(&:to_i)
-				return if birthday_array.empty?
-				reduce_to_single_digit(birthday_array)
+				return if birthdate.blank?
+				birthdate.day
 			end
 		end
 	end

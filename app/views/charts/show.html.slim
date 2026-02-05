@@ -1,7 +1,7 @@
 .pt-8.md:pt-20.px-4.md:px-16.w-full.max-w-4xl.mx-auto
   .text-xl.md:text-2xl.font-semibold.mb-4.pb-4.border-b Your Numerology Chart
   .space-y-6
-    - @chart.chart_numbers.each do |number|
+    - @chart.chart_numbers.ordered.each do |number|
       .pb-6.border-b.last:border-b-0
         = link_to numerology_number_path(number_type: number.name, value: number.value), class: "block hover:opacity-80 transition-opacity" do
           .text-lg.md:text-2xl.font-semibold.mb-2.text-blue-600

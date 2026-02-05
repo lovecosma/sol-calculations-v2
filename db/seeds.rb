@@ -16,9 +16,10 @@ number_types = %w(
   expression
   soul_urge
   personality
+	birthday
 )
-number_types.each do |type_name|
-NumberType.find_or_create_by(name: type_name)
+number_types.each.with_index do |type_name, index|
+NumberType.find_or_create_by(name: type_name, position: index)
 end
 puts "Seeded NumberType records."
 numbers = (1..31).to_a + [11, 22, 33]

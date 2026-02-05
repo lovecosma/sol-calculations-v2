@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe NumerologyNumbers::Descriptions::Builder do
+RSpec.describe NumerologyNumbers::Descriptions::Bui4lder do
   let(:number) { create(:number, value: 1) }
   let(:number_type) { create(:number_type) }
   let(:numerology_number) { create(:numerology_number, number: number, number_type: number_type) }
