@@ -15,10 +15,11 @@ FactoryBot.define do
 
     trait :with_chart_numbers do
       after(:create) do |chart|
-        chart.chart_numbers.destroy_all
+        life_path_num = create(:numerology_number, :life_path, number: create(:number, value: 5))
+        expression_num = create(:numerology_number, :expression, number: create(:number, value: 3))
 
-        create(:chart_number, :life_path, :with_value, chart: chart, value: 5)
-        create(:chart_number, :expression, :with_value, chart: chart, value: 3)
+        create(:chart_number, chart: chart, numerology_number: life_path_num)
+        create(:chart_number, chart: chart, numerology_number: expression_num)
       end
     end
   end

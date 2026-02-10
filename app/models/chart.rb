@@ -30,9 +30,9 @@ private
 def validate_full_name_format
 	return if full_name.blank?
 
-	# Must contain only allowed characters: letters, spaces, hyphens, apostrophes, periods
-	unless full_name.match?(/\A[A-Za-z\s\-'.]+\z/)
-		errors.add(:full_name, "can only contain letters, spaces, hyphens, apostrophes, and periods. Numbers and symbols are not allowed.")
+	# Must contain only allowed characters: letters, spaces, hyphens, apostrophes
+	unless full_name.match?(/\A[A-Za-z\s\-']+\z/)
+		errors.add(:full_name, "can only contain letters, spaces, hyphens, and apostrophes. Numbers and symbols are not allowed.")
 		return
 	end
 
@@ -57,6 +57,7 @@ def should_build_numbers?
 end
 
 def build_numbers
+	chart_numbers.destroy_all
 	Charts::Numbers::Builder.run(chart: self)
 end
 

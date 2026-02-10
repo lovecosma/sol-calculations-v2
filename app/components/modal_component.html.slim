@@ -1,0 +1,9 @@
+div data-controller="modal" id=id
+  = trigger if trigger?
+  .hidden.fixed.inset-0.bg-black/30.flex.items-center.justify-center.z-50 data-modal-target="container" data-action="click->modal#closeOnClickOutside"
+    .bg-white.rounded-lg.p-6.max-w-md.mx-4.overflow-y-auto
+      .flex.justify-between.items-start.mb-4
+        h3.text-xl.font-bold.text-gray-900 = title
+        button.text-gray-400.hover:text-gray-600.text-2xl.leading-none.hover:cursor type="button" data-action="click->modal#close" &times;
+      .space-y-3.text-sm.text-gray-700
+        = content

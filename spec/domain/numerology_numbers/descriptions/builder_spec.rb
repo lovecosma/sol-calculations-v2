@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe NumerologyNumbers::Descriptions::Bui4lder do
+RSpec.describe NumerologyNumbers::Descriptions::Builder do
   let(:number) { create(:number, value: 1) }
   let(:number_type) { create(:number_type) }
   let(:numerology_number) { create(:numerology_number, number: number, number_type: number_type) }
@@ -15,7 +15,7 @@ RSpec.describe NumerologyNumbers::Descriptions::Bui4lder do
           'secondary_titles' => ['The Pioneer', 'The Initiator', 'The Trailblazer'],
           'thumbnail_description' => 'A natural leader with strong independence and initiative.',
           'core_essence' => ['Natural leadership', 'Independent thinking', 'Strong will'],
-          'strengths' => ['Confident', 'Innovative', 'Courageous', 'Determined'],
+          'strengths' => %w(Confident Innovative Courageous Determined),
           'challenges' => ['Impatient', 'Stubborn', 'Overly competitive'],
           'matches' => %w(3 5 7),
           'mismatches' => %w(2 4 8),

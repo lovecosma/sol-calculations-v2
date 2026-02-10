@@ -5,13 +5,52 @@
       = form_with model: @chart, class: 'w-full' do |form|
         .mb-6
           = form.label :full_name, 'Full Name', class: 'block text-gray-700 font-bold mb-2'
+          = render ModalComponent.new(id: 'nameInstructionsModal', title: 'Name Entry Tips') do |modal|
+            - modal.with_trigger do
+              .flex.items-center.gap-2.mb-2
+                .text-sm.text-gray-600 Enter your full name as it appears on your birth certificate
+                button.text-violet-500.hover:text-violet-600 type="button" data-action="click->modal#open" title="Name entry tips"
+                  = image_tag "icons/info-tip.svg", class: "w-5 h-5"
+            p.font-semibold Use your full name as it appears on your birth certificate
+            .space-y-2
+              p.flex.items-start
+                span.mr-2 •
+                span
+                  span.font-semibold Use your birth name,
+                  |  not a nickname or married name (you can explore other names separately)
+              p.flex.items-start
+                span.mr-2 •
+                span.font-semibold Use letters only
+              p.flex.items-start
+                span.mr-2 •
+                span
+                  span.font-semibold  Do not include titles or honorifics
+                  |  (Mr, Mrs, Ms, Dr, Rev, etc.)
+              p.flex.items-start
+                span.mr-2 •
+                span
+                  span.font-semibold Do not include suffixes
+                  |  (Jr, Sr, II, III, IV, PhD, MD, etc.)
+              p.flex.items-start
+                span.mr-2 •
+                span.font-semibold Include all first, middle, and last names
+              p.flex.items-start
+                span.mr-2 •
+                span
+                  span.font-semibold If your name is hyphenated,
+                  |  type both parts (the hyphen will be ignored automatically)
+              p.flex.items-start
+                span.mr-2 •
+                span
+                  span.font-semibold Names with apostrophes or accents are fine
+                  |  (special characters will be handled automatically)
           = form.text_field :full_name,
                             class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-violet-500',
                             placeholder: 'Mary-Jane O\'Connor',
                             required: true,
-                            pattern: '^(?=.*[A-Za-z])[A-Za-z\s\-\'.]+$',
+                            pattern: '^(?=.*[A-Za-z])[A-Za-z\s\-\']+$',
                             maxlength: 100,
-                            title: 'Name can only contain letters, spaces, hyphens, apostrophes, and periods. Numbers and special symbols are not allowed.'
+                            title: 'Name can only contain letters, spaces, hyphens, apostrophes. Numbers and special symbols are not allowed.'
         .mb-6
           = form.label :birthdate, 'Birthdate', class: 'block text-gray-700 font-bold mb-2'
           = form.date_field :birthdate, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-violet-500'

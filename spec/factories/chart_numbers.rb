@@ -1,4 +1,4 @@
-FactoryBot.define do
+ FactoryBot.define do
   factory :chart_number do
     chart
     numerology_number
@@ -21,19 +21,6 @@ FactoryBot.define do
 
     trait :birthday do
       association :numerology_number, :birthday
-    end
-
-    trait :with_value do
-      transient do
-        value { rand(1..9) }
-        type_name { 'life_path' }
-      end
-
-      numerology_number do
-        association :numerology_number,
-          number: association(:number, :specific_value, num: value),
-          number_type: association(:number_type, name: type_name)
-      end
     end
   end
 end
