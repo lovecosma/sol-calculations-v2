@@ -1,0 +1,49 @@
+.container.mx-auto.px-4.py-8.max-w-4xl
+  h1.text-3xl.font-bold.mb-6 Privacy Policy
+
+  .prose.max-w-none
+    p.mb-4
+      | Last updated: #{Date.today.strftime("%B %d, %Y")}
+
+    h2.text-2xl.font-semibold.mt-6.mb-3 Introduction
+    p.mb-4
+      | Welcome to Sol Calculations. We respect your privacy and are committed to protecting your personal data.
+
+    h2.text-2xl.font-semibold.mt-6.mb-3 Information We Collect
+    p.mb-4
+      | When you use Google OAuth to sign in, we collect:
+    ul.list-disc.pl-6.mb-4
+      li Your email address
+      li Your name
+      li Your Google account ID
+
+    h2.text-2xl.font-semibold.mt-6.mb-3 How We Use Your Information
+    p.mb-4
+      | We use the information we collect to:
+    ul.list-disc.pl-6.mb-4
+      li Provide and maintain our service
+      li Authenticate your identity
+      li Save your numerology charts
+
+    h2.text-2xl.font-semibold.mt-6.mb-3 Data Storage
+    p.mb-4
+      | Your data is stored securely and is only accessible to you when you're logged in.
+
+    h2.text-2xl.font-semibold.mt-6.mb-3 Third-Party Services
+    p.mb-4
+      | We use Google OAuth for authentication. Please review Google's privacy policy for information on how they handle your data.
+
+    h2.text-2xl.font-semibold.mt-6.mb-3 Your Rights
+    p.mb-4
+      | You have the right to:
+    ul.list-disc.pl-6.mb-4
+      li Access your personal data
+      li Delete your account and data
+      li Opt out of our services at any time
+
+    h2.text-2xl.font-semibold.mt-6.mb-3 Contact Us
+    p.mb-4
+      | If you have any questions about this Privacy Policy, please contact us.
+
+    p.mt-8
+      = link_to "Back to Home", root_path, class: "text-blue-600 hover:underline"

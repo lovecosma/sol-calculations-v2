@@ -20,4 +20,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "pages#index"
+
+  get "privacy", to: "pages#privacy", as: :privacy
 end
