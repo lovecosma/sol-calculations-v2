@@ -1,0 +1,9 @@
+footer.border-t.mt-8.py-6.bg-gray-50
+  .max-w-screen-xl.mx-auto.px-4
+    .flex.flex-col.md:flex-row.justify-between.items-center.gap-4
+      .text-sm.text-gray-600
+        | © #{Date.today.year} Sol Calculations. All rights reserved.
+
+      .flex.gap-6.text-sm
+        = link_to "Privacy Policy", privacy_path, class: "text-gray-600 hover:text-gray-900 hover:underline"
+        = link_to "Terms of Service", terms_path, class: "text-gray-600 hover:text-gray-900 hover:underline"
