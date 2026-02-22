@@ -8,32 +8,34 @@ RSpec.describe GenerateNumerologyDescriptionJob, type: :job do
   end
 
   describe '#perform' do
-    it 'calls the builder with correct arguments' do
-      described_class.perform_now(numerology_number)
+    it 'finds the numerology number and calls the builder' do
+      described_class.perform_now(numerology_number.id)
       expect(NumerologyNumbers::Descriptions::Builder).to have_received(:run)
         .with(numerology_number: numerology_number)
     end
 
-    context 'with errors' do
-      before do
-        allow(NumerologyNumbers::Descriptions::Builder).to receive(:run)
-          .and_raise(StandardError.new('Unexpected error'))
+    context 'with an OpenAI error' do
+      it 'is configured to retry on OpenAIError' do
+        retried_exceptions = described_class.rescue_handlers.map(&:first)
+        expect(retried_exceptions).to include('GenClient::Base::OpenAIError')
       end
+    end
 
-      it 'does not catch errors' do
+    context 'when the numerology number does not exist' do
+      it 'raises ActiveRecord::RecordNotFound' do
         expect {
-          described_class.perform_now(numerology_number)
-        }.to raise_error(StandardError, 'Unexpected error')
+          described_class.perform_now(-1)
+        }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
 
   describe 'job configuration' do
-    it 'enqueues the job with correct arguments' do
+    it 'enqueues on the default queue with the ID' do
       expect {
-        described_class.perform_later(numerology_number)
+        described_class.perform_later(numerology_number.id)
       }.to have_enqueued_job(described_class)
-        .with(numerology_number)
+        .with(numerology_number.id)
         .on_queue('default')
     end
   end
