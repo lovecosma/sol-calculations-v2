@@ -15,8 +15,7 @@ module NumerologyNumbers
         response_data = GenClient::Base.run(
           system_content: system_content,
           user_content: user_content,
-          response_structure: NumerologyNumberDescription,
-          model: "gpt-5-nano"
+          response_structure: NumerologyNumberDescription
         )
         return unless response_data
 
