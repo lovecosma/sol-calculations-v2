@@ -1,0 +1,2 @@
+class CelebrityChartsController < ApplicationController
+end

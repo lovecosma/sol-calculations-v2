@@ -230,14 +230,11 @@ RSpec.describe Chart, type: :model do
 
         chart.update(full_name: 'Jane Smith')
       end
-
-      it 'removes old chart_numbers' do
-        3.times { create(:chart_number, chart: chart) }
-        expect(chart.chart_numbers.count).to eq(3)
-
-        chart.update(full_name: 'New Name')
-
-        expect(chart.chart_numbers.reload.count).to eq(0).or be > 0
+      
+      it 'destroys old chart numbers before rebuilding' do
+        allow(chart.chart_numbers).to receive(:destroy_all).and_call_original
+        chart.update(full_name: 'Jane Smith')
+        expect(chart.chart_numbers).to have_received(:destroy_all)
       end
     end
 

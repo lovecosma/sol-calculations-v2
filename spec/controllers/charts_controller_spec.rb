@@ -73,34 +73,34 @@ RSpec.describe ChartsController, type: :controller do
     
     it 'assigns a new chart to @chart' do
       get :new
-      expect(assigns(:chart)).to be_a_new(Chart)
+      expect(assigns(:chart)).to be_a_new(UserChart)
     end
   end
   
   describe 'POST #create' do
     context 'with valid parameters' do
-      it 'creates a new Chart' do
+      it 'creates a new UserChart' do
         expect {
           post :create, params: { chart: valid_attributes }
-        }.to change(Chart, :count).by(1)
+        }.to change(UserChart, :count).by(1)
       end
-      
+
       it 'associates the chart with the current user' do
         post :create, params: { chart: valid_attributes }
-        expect(Chart.last.user).to eq(user)
+        expect(UserChart.last.user).to eq(user)
       end
-      
+
       it 'redirects to the created chart' do
         post :create, params: { chart: valid_attributes }
-        expect(response).to redirect_to(chart_path(Chart.last))
+        expect(response).to redirect_to(chart_path(UserChart.last))
       end
     end
     
     context 'with invalid parameters' do
-      it 'does not create a new Chart' do
+      it 'does not create a new UserChart' do
         expect {
           post :create, params: { chart: invalid_attributes }
-        }.not_to change(Chart, :count)
+        }.not_to change(UserChart, :count)
       end
       
       it 'renders the new template' do
@@ -179,7 +179,7 @@ RSpec.describe ChartsController, type: :controller do
     it 'destroys the requested chart' do
       expect {
         delete :destroy, params: { id: chart.to_param }
-      }.to change(Chart, :count).by(-1)
+      }.to change(UserChart, :count).by(-1)
     end
     
     it 'redirects to the charts list' do
@@ -195,7 +195,7 @@ RSpec.describe ChartsController, type: :controller do
     it 'destroys associated chart_numbers' do
       expect {
         delete :destroy, params: { id: chart.to_param }
-      }.to change(ChartNumber, :count).by(-2) # Created with trait :with_chart_numbers
+      }.to change(ChartNumber, :count).by(-7)
     end
   end
   

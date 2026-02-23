@@ -33,7 +33,7 @@ FactoryBot.define do
     end
 
     trait :life_path do
-      association :number_type, factory: [:number_type, :life_path]
+      association :number_type, factory: :number_type
     end
 
     trait :expression do

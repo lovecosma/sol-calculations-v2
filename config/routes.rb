@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   resources :charts
+  resources :celebrity_charts
   get '/numerology/:number_type/:value', to: "numerology_numbers#show", as: :numerology_number
   get '/numerology/:number_type', to: "number_types#show", as: :number_type
   # namespace "numerology" do

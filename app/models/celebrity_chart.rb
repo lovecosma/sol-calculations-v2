@@ -1,0 +1,2 @@
+class CelebrityChart < Chart
+end
