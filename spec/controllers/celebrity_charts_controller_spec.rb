@@ -7,7 +7,6 @@ RSpec.describe CelebrityChartsController, type: :controller do
 
   before do
     CelebrityChart.delete_all
-    sign_in user
   end
 
   describe "GET #index" do
@@ -81,11 +80,9 @@ RSpec.describe CelebrityChartsController, type: :controller do
     end
 
     context "when not authenticated" do
-      before { sign_out user }
-
-      it "redirects to sign in" do
+      it "is publicly accessible" do
         get :index
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to be_successful
       end
     end
   end
