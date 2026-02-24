@@ -3,6 +3,7 @@ class NumerologyNumbersController < ApplicationController
 	before_action :set_matches_and_mismatches, only: [:show]
 
 	def show
+		fresh_when @numerology_number
 	end
 
 	private

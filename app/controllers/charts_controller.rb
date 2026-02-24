@@ -3,6 +3,7 @@ class ChartsController < ApplicationController
 		@charts = current_user.user_charts
 			.includes(chart_numbers: { numerology_number: [:number_type, :number] })
 			.order(created_at: :desc)
+			.page(params[:page])
 	end
 
 	def show

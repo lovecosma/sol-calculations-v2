@@ -18,6 +18,7 @@ nav.border-b data-controller="navbar"
       ul.font-medium.flex.flex-col.md:flex-row.md:space-x-8.p-4.md:p-0.mt-4.md:mt-0.border.md:border-0.rounded-lg
         = render "shared/nav_link", value: "Home", href: root_path
         = render "shared/nav_link", value: "Calculator", href: new_chart_path
+        = render "shared/nav_link", value: "Celebrities", href: celebrity_charts_path
         - if user_signed_in?
           = render "shared/nav_link", value: "My Charts", href: charts_path
           = render "shared/nav_link", value: "Log out", href: destroy_user_session_path, method: :delete

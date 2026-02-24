@@ -1,5 +1,5 @@
 class ChartNumber < ApplicationRecord
-	belongs_to :chart
+	belongs_to :chart, touch: true
 	belongs_to :numerology_number
 
 	scope :ordered, -> { joins(numerology_number: :number_type).order('number_types.position') }

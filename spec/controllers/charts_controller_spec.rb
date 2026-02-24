@@ -22,24 +22,50 @@ RSpec.describe ChartsController, type: :controller do
   end
   
   describe 'GET #index' do
+    include ActiveSupport::Testing::TimeHelpers
+
     it 'returns a success response' do
       get :index
       expect(response).to be_successful
     end
-    
-    it 'assigns @charts with current user\'s charts ordered by created_at desc' do
+
+    it 'renders the index template' do
       get :index
-      expect(assigns(:charts)).to contain_exactly(chart1, chart2)
+      expect(response).to render_template(:index)
     end
-    
-    it 'does not include other users\' charts' do
-      user_chart = create(:chart, user: user)
-      other_chart = create(:chart, user: other_user)
-      
+
+    it 'assigns @charts with the current user\'s charts' do
       get :index
-      
-      expect(assigns(:charts)).to include(user_chart)
+      expect(assigns(:charts)).to include(chart1, chart2)
+    end
+
+    it 'orders @charts by created_at descending' do
+      older_chart = travel_to(2.days.ago) { create(:chart, user: user) }
+      newer_chart = travel_to(1.day.ago)  { create(:chart, user: user) }
+
+      get :index
+      expect(assigns(:charts).to_a.first(2)).to eq([newer_chart, older_chart])
+    end
+
+    it 'does not include other users\' charts' do
+      other_chart = create(:chart, user: other_user)
+
+      get :index
+
       expect(assigns(:charts)).not_to include(other_chart)
+    end
+
+    it 'eager loads chart_numbers' do
+      chart1
+      get :index
+      assigns(:charts).each do |chart|
+        expect(chart.association(:chart_numbers)).to be_loaded
+      end
+    end
+
+    it 'accepts a page param' do
+      get :index, params: { page: 2 }
+      expect(response).to be_successful
     end
   end
   

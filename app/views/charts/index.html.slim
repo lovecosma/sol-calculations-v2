@@ -30,3 +30,4 @@
     .text-center.py-8
       .text-gray-500.mb-4 You haven't created any charts yet.
       = link_to "Create your first chart", new_chart_path, class: "text-blue-600 hover:underline"
+  = paginate @charts

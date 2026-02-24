@@ -97,3 +97,5 @@ gem "pry", "~> 0.15.2"
 gem "openai", "~> 0.23.2"
 
 gem "dotenv", "~> 3.1"
+
+gem "kaminari"
