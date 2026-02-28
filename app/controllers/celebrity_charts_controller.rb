@@ -6,7 +6,8 @@ class CelebrityChartsController < ApplicationController
                             .includes(:celebrity, chart_numbers: { numerology_number: [:number_type, :number] })
                             .joins(:celebrity)
                             .order("celebrities.popularity DESC NULLS LAST")
-                            .page(params[:page])
-    fresh_when @charts
+    @charts = @charts.where("charts.full_name ILIKE ?", "%#{params[:q]}%") if params[:q].present?
+    @charts = @charts.page(params[:page])
+    fresh_when @charts unless params[:q].present?
   end
 end
