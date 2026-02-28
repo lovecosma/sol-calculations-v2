@@ -8,6 +8,7 @@ class CelebrityChartsController < ApplicationController
                             .order("celebrities.popularity DESC NULLS LAST")
     @charts = @charts.where("charts.full_name ILIKE ?", "%#{params[:q]}%") if params[:q].present?
     @charts = @charts.page(params[:page])
+
     fresh_when @charts unless params[:q].present?
   end
 end

@@ -12,3 +12,6 @@ application.register("navbar", NavbarController)
 
 import ModalController from "./modal_controller"
 application.register("modal", ModalController)
+
+import AutoSubmitController from "./auto_submit_controller"
+application.register("auto-submit", AutoSubmitController)

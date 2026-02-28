@@ -1,33 +1,9 @@
 .pt-8.md:pt-20.px-4.md:px-16.w-full.items-center
   .w-full.flex.border-b.mb-4.p-4
     .text-2xl.font-semibold Celebrity Charts
-  = form_with url: celebrity_charts_path, method: :get, class: "mb-4 px-4" do |f|
+  = form_with url: celebrity_charts_path, method: :get, class: "mb-4 px-4", data: { controller: "auto-submit", auto_submit_delay_value: 300, turbo_frame: "celebrity_charts_results" } do |f|
     .flex.gap-2
-      = f.text_field :q, value: params[:q], placeholder: "Search by name...", class: "border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-300"
+      = f.text_field :q, value: params[:q], placeholder: "Search by name...", class: "border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-300", data: { action: "input->auto-submit#submit" }
       = f.submit "Search", class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer"
-  - if @charts.any?
-    .space-y-4
-      - @charts.each do |chart|
-        - cache chart do
-          .border.rounded-lg.p-4.md:p-6.hover:bg-gray-50.transition-colors
-            .flex.flex-col.gap-4
-              .flex.flex-col.md:flex-row.md:items-center.md:justify-between.gap-4
-                .flex.items-center.gap-4
-                  - if chart.celebrity&.profile_path.present?
-                    = image_tag "https://media.themoviedb.org/t/p/w185#{chart.celebrity.profile_path}", class: "rounded-full object-cover flex-shrink-0", style: "width: 100px; height: 100px;", alt: chart.full_name
-                  div
-                    .text-xl.font-semibold.mb-1 = chart.full_name
-                    .text-sm.md:text-base.text-gray-600
-                      | Birthdate:
-                      = " "
-                      = chart.birthdate.strftime("%B %d, %Y")
-              .grid.grid-cols-2.md:grid-cols-3.lg:grid-cols-5.gap-4
-                - chart.chart_numbers.sort_by { |cn| cn.numerology_number.number_type.position.to_i }.each do |number|
-                  = link_to numerology_number_path(number_type: number.name, value: number.value), class: "hover:underline" do
-                    .text-center.px-3.py-2.border.rounded-lg.hover:bg-gray-100.transition-colors
-                      .text-xs.text-gray-500.mb-1 = NumberType::HUMAN_NAMES[number.name]
-                      .text-lg.font-semibold = number.value
-  - else
-    .text-center.py-8
-      .text-gray-500 No celebrity charts yet.
-  = paginate @charts
+  = turbo_frame_tag "celebrity_charts_results" do
+    = render "results", charts: @charts
