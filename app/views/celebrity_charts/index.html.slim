@@ -9,8 +9,8 @@
             .flex.flex-col.gap-4
               .flex.flex-col.md:flex-row.md:items-center.md:justify-between.gap-4
                 .flex.items-center.gap-4
-                  - if chart.profile_path.present?
-                    = image_tag "https://media.themoviedb.org/t/p/w185#{chart.profile_path}", class: "rounded-full object-cover flex-shrink-0", style: "width: 100px; height: 100px;", alt: chart.full_name
+                  - if chart.celebrity&.profile_path.present?
+                    = image_tag "https://media.themoviedb.org/t/p/w185#{chart.celebrity.profile_path}", class: "rounded-full object-cover flex-shrink-0", style: "width: 100px; height: 100px;", alt: chart.full_name
                   div
                     .text-xl.font-semibold.mb-1 = chart.full_name
                     .text-sm.md:text-base.text-gray-600

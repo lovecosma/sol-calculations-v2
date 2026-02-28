@@ -8,15 +8,15 @@ class FetchPopularPeopleByPageJob < ApplicationJob
            attempts: 5
 
   def perform(page = 1)
-    api  = CelebrityCharts::Api.new
-    data = api.fetch_popular_people(page)
+    api         = CelebrityCharts::Api.new
+    valid_attrs = CelebrityCharts::PeopleFetcher.run(api: api, page: page)
 
-    data["results"].each do |person|
-      details = api.fetch_person_details(person["id"])
-      sliced_data = person.merge(details).slice("birthday", "original_name", "profile_path")
-      CelebrityCharts::Creator.run(celebrity_data: sliced_data)
-    rescue CelebrityCharts::Api::TmdbError => e
-      Rails.logger.warn("Skipping person #{person["id"]}: #{e.message}")
-    end
+    return if valid_attrs.empty?
+
+    Celebrity.upsert_all(
+      valid_attrs,
+      unique_by: :external_id,
+      update_only: %i(original_name birthdate profile_path popularity)
+    )
   end
 end

@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_24_022146) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_28_211820) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "celebrities", force: :cascade do |t|
+    t.integer "external_id", null: false
+    t.string "original_name", null: false
+    t.date "birthdate"
+    t.string "profile_path"
+    t.float "popularity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "celebrity_chart_id"
+    t.index ["celebrity_chart_id"], name: "index_celebrities_on_celebrity_chart_id"
+    t.index ["external_id"], name: "index_celebrities_on_external_id", unique: true
+  end
 
   create_table "chart_numbers", force: :cascade do |t|
     t.bigint "chart_id", null: false
@@ -30,7 +43,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_24_022146) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.string "type"
-    t.string "profile_path"
     t.index ["type"], name: "index_charts_on_type"
     t.index ["user_id"], name: "index_charts_on_user_id"
   end
@@ -203,6 +215,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_24_022146) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "celebrities", "charts", column: "celebrity_chart_id", on_delete: :nullify
   add_foreign_key "chart_numbers", "charts", on_delete: :cascade
   add_foreign_key "chart_numbers", "numerology_numbers", on_delete: :cascade
   add_foreign_key "charts", "users", on_delete: :cascade
