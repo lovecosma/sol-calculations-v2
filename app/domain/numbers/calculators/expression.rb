@@ -3,9 +3,9 @@
 module Numbers
 	module Calculators
 		class Expression < Base
-		
+
 			def run
-				name_numbers = string_to_numbers(full_name)
+				name_numbers = string_to_numbers(raw_name)
 				return if name_numbers.empty?
 				reduce_to_single_digit(name_numbers)
 			end

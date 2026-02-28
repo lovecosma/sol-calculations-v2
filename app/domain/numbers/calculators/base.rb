@@ -4,8 +4,9 @@ module Numbers
     class Base
       extend Dry::Initializer
       include Command
+      include NameNormalizable
       option :chart
-      
+
       PYTHAGOREAN_NUMEROLOGY = {
         'a' => 1, 'j' => 1, 's' => 1,
         'b' => 2, 'k' => 2, 't' => 2,
@@ -56,7 +57,7 @@ module Numbers
       end
       
       def raw_name
-        full_name.gsub(/[^A-Za-z]/, "")
+        strip_affixes(full_name).gsub(/[^A-Za-z]/, "")
       end
       
       def filter_consonants(string)

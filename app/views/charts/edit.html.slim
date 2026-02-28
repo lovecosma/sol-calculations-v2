@@ -9,9 +9,9 @@
                             class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-violet-500',
                             placeholder: 'Mary-Jane O\'Connor',
                             required: true,
-                            pattern: '^(?=.*[A-Za-z])[A-Za-z\s\-\'.]+$',
+                            pattern: '^(?=.*[A-Za-z])[A-Za-z\s\-\']+$',
                             maxlength: 100,
-                            title: 'Name can only contain letters, spaces, hyphens, apostrophes, and periods. Numbers and special symbols are not allowed.'
+                            title: 'Name can only contain letters, spaces, hyphens, and apostrophes. Numbers, periods, and special symbols are not allowed.'
         .mb-6
           = form.label :birthdate, 'Birthdate', class: 'block text-gray-700 font-bold mb-2'
           = form.date_field :birthdate, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-violet-500'

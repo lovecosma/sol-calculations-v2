@@ -1,8 +1,11 @@
 class Chart < ApplicationRecord
+  include NameNormalizable
+
   has_many :chart_numbers, dependent: :destroy
 
   validates :full_name, presence: true, length: { maximum: 100 }
   validates :birthdate, presence: true
+  before_validation :strip_name_affixes
   validate :validate_full_name_format
 
   after_commit :build_numbers, on: [:create, :update], if: :should_build_numbers?
@@ -25,6 +28,11 @@ class Chart < ApplicationRecord
   end
 
   private
+
+  def strip_name_affixes
+    return if full_name.blank?
+    self.full_name = strip_affixes(full_name)
+  end
 
   def validate_full_name_format
     return if full_name.blank?

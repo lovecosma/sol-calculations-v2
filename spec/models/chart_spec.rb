@@ -42,8 +42,18 @@ RSpec.describe Chart, type: :model do
         expect(chart).to be_valid
       end
 
-      it 'accepts names with hyphens' do
+      it 'accepts a hyphenated first name' do
         chart = build(:chart, user: user, full_name: 'Mary-Jane Smith')
+        expect(chart).to be_valid
+      end
+
+      it 'accepts a hyphenated last name' do
+        chart = build(:chart, user: user, full_name: 'Anne Smith-Jones')
+        expect(chart).to be_valid
+      end
+
+      it 'accepts a fully hyphenated name' do
+        chart = build(:chart, user: user, full_name: 'Mary-Jane Smith-Jones')
         expect(chart).to be_valid
       end
 
@@ -53,7 +63,7 @@ RSpec.describe Chart, type: :model do
       end
 
       it 'rejects names with periods' do
-        chart = build(:chart, user: user, full_name: 'Dr. Smith')
+        chart = build(:chart, user: user, full_name: 'John. Doe')
         expect(chart).not_to be_valid
         expect(chart.errors[:full_name]).to include(/can only contain letters/)
       end
@@ -74,6 +84,21 @@ RSpec.describe Chart, type: :model do
         chart = build(:chart, user: user, full_name: '---')
         expect(chart).not_to be_valid
         expect(chart.errors[:full_name]).to include(/must contain at least one letter/)
+      end
+
+      it 'strips a title prefix before validating' do
+        chart = create(:chart, user: user, full_name: 'Dr. Robert Smith')
+        expect(chart.full_name).to eq('Robert Smith')
+      end
+
+      it 'strips a generation suffix before validating' do
+        chart = create(:chart, user: user, full_name: 'Robert Downey Jr.')
+        expect(chart.full_name).to eq('Robert Downey')
+      end
+
+      it 'strips both a prefix and suffix before validating' do
+        chart = create(:chart, user: user, full_name: 'Mr. Robert Downey Jr.')
+        expect(chart.full_name).to eq('Robert Downey')
       end
 
       it 'normalizes multiple spaces to single space' do
