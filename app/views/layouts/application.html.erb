@@ -27,10 +27,10 @@
     <%= render 'shared/nav' %>
     <div class="flex-grow">
       <% if notice %>
-        <p class="w-full flex justify-center px-4 notice"><%= notice %></p>
+        <p class="w-full flex justify-center px-4 notice" data-turbo-temporary><%= notice %></p>
       <% end %>
       <% if alert %>
-        <p class="w-full flex justify-center px-4 alert"><%= alert %></p>
+        <p class="w-full flex justify-center px-4 alert" data-turbo-temporary><%= alert %></p>
       <% end %>
       <%= yield %>
     </div>
