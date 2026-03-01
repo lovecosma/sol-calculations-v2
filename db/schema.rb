@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_28_211820) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_28_220001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -25,6 +25,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_28_211820) do
     t.bigint "celebrity_chart_id"
     t.index ["celebrity_chart_id"], name: "index_celebrities_on_celebrity_chart_id"
     t.index ["external_id"], name: "index_celebrities_on_external_id", unique: true
+    t.index ["popularity"], name: "index_celebrities_on_popularity"
   end
 
   create_table "chart_numbers", force: :cascade do |t|
@@ -75,6 +76,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_28_211820) do
     t.datetime "updated_at", null: false
     t.text "thumbnail_description"
     t.index ["number_id"], name: "index_numerology_numbers_on_number_id"
+    t.index ["number_type_id", "number_id"], name: "index_numerology_numbers_on_number_type_id_and_number_id"
     t.index ["number_type_id"], name: "index_numerology_numbers_on_number_type_id"
   end
 

@@ -6,8 +6,25 @@ class CelebrityChartsController < ApplicationController
                             .includes(chart_numbers: { numerology_number: [:number_type, :number] })
                             .order("celebrities.popularity DESC NULLS LAST")
     @charts = @charts.where("charts.full_name ILIKE ?", "%#{params[:q]}%") if params[:q].present?
+    if params[:number_type].present? && params[:number_value].present?
+      @charts = @charts.where(
+        id: ChartNumber.joins(numerology_number: [:number_type, :number])
+                       .where(number_types: { name: params[:number_type] }, numbers: { value: params[:number_value] })
+                       .select(:chart_id)
+      )
+    end
     @charts = @charts.page(params[:page])
 
-    fresh_when @charts unless params[:q].present?
+    @number_values = Number.order(:value).pluck(:value)
+
+    fresh_when @charts unless filtering?
+  end
+
+  helper_method :filtering?
+
+  private
+
+  def filtering?
+    params[:q].present? || params[:number_type].present? || params[:number_value].present?
   end
 end
