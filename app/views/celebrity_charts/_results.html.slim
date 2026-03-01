@@ -1,7 +1,7 @@
 - if charts.any?
   .space-y-4
     - charts.each do |chart|
-      - cache chart do
+      - cache ["v2", chart] do
         .border.rounded-lg.p-4.md:p-6.hover:bg-gray-50.transition-colors
           .flex.flex-col.gap-4
             .flex.flex-col.md:flex-row.md:items-center.md:justify-between.gap-4
@@ -16,7 +16,7 @@
                     = chart.birthdate.strftime("%B %d, %Y")
             .grid.grid-cols-2.md:grid-cols-3.lg:grid-cols-5.gap-4
               - chart.ordered_chart_numbers.each do |number|
-                = link_to numerology_number_path(number_type: number.name, value: number.value), class: "hover:underline" do
+                = link_to numerology_number_path(number_type: number.name, value: number.value), class: "hover:underline", data: { turbo: false } do
                   .text-center.px-3.py-2.border.rounded-lg.hover:bg-gray-100.transition-colors
                     .text-xs.text-gray-500.mb-1 = NumberType::HUMAN_NAMES[number.name]
                     .text-lg.font-semibold = number.value

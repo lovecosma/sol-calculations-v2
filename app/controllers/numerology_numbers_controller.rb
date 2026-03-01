@@ -1,4 +1,5 @@
 class NumerologyNumbersController < ApplicationController
+	skip_before_action :authenticate_user!, only: [:show]
 	before_action :set_numerology_number, only: [:show]
 	before_action :set_matches_and_mismatches, only: [:show]
 
