@@ -2,6 +2,7 @@ class Chart < ApplicationRecord
   include NameNormalizable
 
   has_many :chart_numbers, dependent: :destroy
+  has_many :ordered_chart_numbers, -> { ordered }, class_name: "ChartNumber"
 
   validates :full_name, presence: true, length: { maximum: 100 }
   validates :birthdate, presence: true

@@ -15,7 +15,7 @@
                     = " "
                     = chart.birthdate.strftime("%B %d, %Y")
             .grid.grid-cols-2.md:grid-cols-3.lg:grid-cols-5.gap-4
-              - chart.chart_numbers.sort_by { |cn| cn.numerology_number.number_type.position.to_i }.each do |number|
+              - chart.ordered_chart_numbers.each do |number|
                 = link_to numerology_number_path(number_type: number.name, value: number.value), class: "hover:underline" do
                   .text-center.px-3.py-2.border.rounded-lg.hover:bg-gray-100.transition-colors
                     .text-xs.text-gray-500.mb-1 = NumberType::HUMAN_NAMES[number.name]
