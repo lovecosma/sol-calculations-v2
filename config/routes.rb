@@ -20,6 +20,11 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
+  if Rails.env.test?
+    get    '/test/sign_in',  to: 'test/sessions#create'
+    delete '/test/sign_in',  to: 'test/sessions#destroy'
+  end
+
   root "pages#index"
 
   get "privacy", to: "pages#privacy", as: :privacy
