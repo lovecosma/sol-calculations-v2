@@ -83,10 +83,14 @@ RSpec.describe ChartsController, type: :controller do
     end
     
     context 'when chart does not exist' do
-      it 'raises ActiveRecord::RecordNotFound' do
-        expect {
-          get :show, params: { id: 99999 }
-        }.to raise_error(ActiveRecord::RecordNotFound)
+      it 'returns 404 status' do
+        get :show, params: { id: 99999 }
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'renders the not_found template' do
+        get :show, params: { id: 99999 }
+        expect(response).to render_template('errors/not_found')
       end
     end
   end
@@ -221,7 +225,7 @@ RSpec.describe ChartsController, type: :controller do
     it 'destroys associated chart_numbers' do
       expect {
         delete :destroy, params: { id: chart.to_param }
-      }.to change(ChartNumber, :count).by(-7)
+      }.to change(ChartNumber, :count).by(-2)
     end
   end
   

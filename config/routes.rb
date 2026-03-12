@@ -29,4 +29,9 @@ Rails.application.routes.draw do
 
   get "privacy", to: "pages#privacy", as: :privacy
   get "terms", to: "pages#terms", as: :terms
+
+  get "/404", to: "errors#not_found"
+  get "/500", to: "errors#internal_server_error"
+
+  match "*path", to: "errors#not_found", via: :all
 end

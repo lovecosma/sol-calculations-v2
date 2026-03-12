@@ -23,6 +23,7 @@ module SolCalculations
     #
     # config.time_zone = "Central Time (US & Canada)"
     config.eager_load_paths << Rails.root.join("domain")
+    config.exceptions_app = self.routes
 
     # Validate required environment variables after initialization
     config.after_initialize do
