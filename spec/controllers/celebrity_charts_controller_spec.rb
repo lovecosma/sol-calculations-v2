@@ -85,5 +85,73 @@ RSpec.describe CelebrityChartsController, type: :controller do
         expect(response).to be_successful
       end
     end
+
+    context "filtering by name" do
+      let!(:match)    { CelebrityChart.create!(full_name: "Marie Curie", birthdate: Date.new(1867, 11, 7)) }
+      let!(:no_match) { CelebrityChart.create!(full_name: "Albert Einstein", birthdate: Date.new(1879, 3, 14)) }
+
+      it "includes charts whose name matches q" do
+        get :index, params: { q: "marie" }
+        expect(assigns(:charts)).to include(match)
+      end
+
+      it "excludes charts whose name does not match q" do
+        get :index, params: { q: "marie" }
+        expect(assigns(:charts)).not_to include(no_match)
+      end
+
+      it "matches case-insensitively" do
+        get :index, params: { q: "MARIE" }
+        expect(assigns(:charts)).to include(match)
+      end
+
+      it "returns all charts when q is blank" do
+        get :index, params: { q: "" }
+        expect(assigns(:charts)).to include(match, no_match)
+      end
+    end
+
+    context "filtering by number type and value" do
+      let!(:matching_chart)     { CelebrityChart.create!(full_name: "Marie Curie", birthdate: Date.new(1867, 11, 7)) }
+      let!(:non_matching_chart) { CelebrityChart.create!(full_name: "Albert Einstein", birthdate: Date.new(1879, 3, 14)) }
+
+      before do
+        number_type = NumberType.find_or_create_by!(name: "life_path")
+        number = Number.find_or_create_by!(value: 7)
+        numerology_number = NumerologyNumber.find_or_create_by!(number: number, number_type: number_type)
+        ChartNumber.create!(chart: matching_chart, numerology_number: numerology_number)
+      end
+
+      it "includes charts with the matching number type and value" do
+        get :index, params: { number_type: "life_path", number_value: "7" }
+        expect(assigns(:charts)).to include(matching_chart)
+      end
+
+      it "excludes charts without the matching number type and value" do
+        get :index, params: { number_type: "life_path", number_value: "7" }
+        expect(assigns(:charts)).not_to include(non_matching_chart)
+      end
+
+      it "does not filter when number_type is missing" do
+        get :index, params: { number_value: "7" }
+        expect(assigns(:charts)).to include(matching_chart, non_matching_chart)
+      end
+
+      it "does not filter when number_value is missing" do
+        get :index, params: { number_type: "life_path" }
+        expect(assigns(:charts)).to include(matching_chart, non_matching_chart)
+      end
+    end
+
+    context "@number_values" do
+      it "assigns all number values ordered by value" do
+        Number.find_or_create_by!(value: 3)
+        Number.find_or_create_by!(value: 1)
+        Number.find_or_create_by!(value: 7)
+
+        get :index
+        expect(assigns(:number_values)).to eq(Number.order(:value).pluck(:value))
+      end
+    end
   end
 end

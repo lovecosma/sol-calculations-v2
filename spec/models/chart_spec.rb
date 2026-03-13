@@ -233,6 +233,72 @@ RSpec.describe Chart, type: :model do
     end
   end
 
+  describe 'scopes' do
+    before { allow(Charts::Numbers::Builder).to receive(:run) }
+
+    describe '.search_by_name' do
+      it 'returns charts whose full_name matches the query' do
+        match = create(:chart, user: user, full_name: 'Marie Curie')
+        create(:chart, user: user, full_name: 'Albert Einstein')
+
+        expect(Chart.search_by_name('marie')).to include(match)
+      end
+
+      it 'excludes charts that do not match' do
+        create(:chart, user: user, full_name: 'Marie Curie')
+        no_match = create(:chart, user: user, full_name: 'Albert Einstein')
+
+        expect(Chart.search_by_name('marie')).not_to include(no_match)
+      end
+
+      it 'is case-insensitive' do
+        chart = create(:chart, user: user, full_name: 'Marie Curie')
+
+        expect(Chart.search_by_name('MARIE')).to include(chart)
+        expect(Chart.search_by_name('marie')).to include(chart)
+        expect(Chart.search_by_name('Marie')).to include(chart)
+      end
+
+      it 'matches on partial name' do
+        chart = create(:chart, user: user, full_name: 'Marie Curie')
+
+        expect(Chart.search_by_name('Cur')).to include(chart)
+      end
+    end
+
+    describe '.with_number' do
+      it 'returns charts that have a matching number type and value' do
+        number = create(:number, value: 7)
+        number_type = create(:number_type, name: 'life_path')
+        numerology_number = create(:numerology_number, number: number, number_type: number_type)
+        match = create(:chart, user: user, full_name: 'Marie Curie')
+        create(:chart_number, chart: match, numerology_number: numerology_number)
+
+        expect(Chart.with_number('life_path', 7)).to include(match)
+      end
+
+      it 'excludes charts without the matching number type' do
+        number = create(:number, value: 7)
+        expression_type = create(:number_type, :expression)
+        numerology_number = create(:numerology_number, number: number, number_type: expression_type)
+        chart = create(:chart, user: user, full_name: 'Marie Curie')
+        create(:chart_number, chart: chart, numerology_number: numerology_number)
+
+        expect(Chart.with_number('life_path', 7)).not_to include(chart)
+      end
+
+      it 'excludes charts without the matching number value' do
+        number = create(:number, value: 3)
+        number_type = create(:number_type, name: 'life_path')
+        numerology_number = create(:numerology_number, number: number, number_type: number_type)
+        chart = create(:chart, user: user, full_name: 'Marie Curie')
+        create(:chart_number, chart: chart, numerology_number: numerology_number)
+
+        expect(Chart.with_number('life_path', 7)).not_to include(chart)
+      end
+    end
+  end
+
   describe 'on create' do
     it 'creates a valid chart' do
       chart = build(:chart, user: user)

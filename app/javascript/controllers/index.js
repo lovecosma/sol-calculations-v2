@@ -15,3 +15,6 @@ application.register("modal", ModalController)
 
 import AutoSubmitController from "./auto_submit_controller"
 application.register("auto-submit", AutoSubmitController)
+
+import SubmitButtonController from "./submit_button_controller"
+application.register("submit-button", SubmitButtonController)

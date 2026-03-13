@@ -4,6 +4,13 @@ class Chart < ApplicationRecord
   has_many :chart_numbers, dependent: :destroy
   has_many :ordered_chart_numbers, -> { ordered }, class_name: "ChartNumber"
 
+  scope :search_by_name, ->(q) { where("charts.full_name ILIKE ?", "%#{q}%") }
+  scope :with_number, ->(type, value) {
+    where(id: ChartNumber.joins(numerology_number: [:number_type, :number])
+                         .where(number_types: { name: type }, numbers: { value: value })
+                         .select(:chart_id))
+  }
+
   validates :full_name, presence: true, length: { maximum: 100 }
   validates :birthdate, presence: true
   before_validation :strip_name_affixes
