@@ -40,7 +40,7 @@ RSpec.describe ButtonComponent, type: :component do
 
     it "renders secondary styles" do
       render_inline(described_class.new(label: "Click me", variant: :secondary))
-      expect(page).to have_css("button.bg-white.text-violet-600")
+      expect(page).to have_css("button.bg-white.text-black")
     end
   end
 

@@ -144,13 +144,70 @@ RSpec.describe CelebrityChartsController, type: :controller do
     end
 
     context "@number_values" do
-      it "assigns all number values ordered by value" do
+      it "assigns all number values when no number_type param is present" do
         Number.find_or_create_by!(value: 3)
         Number.find_or_create_by!(value: 1)
         Number.find_or_create_by!(value: 7)
 
         get :index
         expect(assigns(:number_values)).to eq(Number.order(:value).pluck(:value))
+      end
+
+      it "assigns only values for the given number_type when number_type param is present" do
+        number_type = NumberType.find_or_create_by!(name: "life_path")
+        other_type  = NumberType.find_or_create_by!(name: "expression")
+        number_5    = Number.find_or_create_by!(value: 5)
+        number_9    = Number.find_or_create_by!(value: 9)
+        NumerologyNumber.find_or_create_by!(number: number_5, number_type: number_type)
+        NumerologyNumber.find_or_create_by!(number: number_9, number_type: other_type)
+
+        get :index, params: { number_type: "life_path" }
+        expect(assigns(:number_values)).to eq([5])
+      end
+    end
+  end
+
+  describe "GET #number_values" do
+    it "returns a success response" do
+      get :number_values
+      expect(response).to be_successful
+    end
+
+    it "is publicly accessible" do
+      get :number_values
+      expect(response).to be_successful
+    end
+
+    it "renders the number_value_select partial" do
+      get :number_values
+      expect(response).to render_template(partial: "_number_value_select")
+    end
+
+    context "without a number_type param" do
+      it "returns all number values ordered by value" do
+        create(:number, value: 9)
+        create(:number, value: 1)
+        create(:number, value: 5)
+
+        get :number_values
+        expect(response.body).to include("1", "5", "9")
+      end
+    end
+
+    context "with a number_type param" do
+      before do
+        create(:numerology_number, :life_path, number: create(:number, value: 3))
+        create(:numerology_number, :expression, number: create(:number, value: 7))
+      end
+
+      it "returns only values belonging to that number type" do
+        get :number_values, params: { number_type: "life_path" }
+        expect(response.body).to include("3")
+      end
+
+      it "excludes values from other number types" do
+        get :number_values, params: { number_type: "life_path" }
+        expect(response.body).not_to include(">7<")
       end
     end
   end

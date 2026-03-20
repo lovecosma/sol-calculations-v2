@@ -18,3 +18,6 @@ application.register("auto-submit", AutoSubmitController)
 
 import SubmitButtonController from "./submit_button_controller"
 application.register("submit-button", SubmitButtonController)
+
+import TurboTriggerController from "./turbo_trigger_controller"
+application.register("turbo-trigger", TurboTriggerController)

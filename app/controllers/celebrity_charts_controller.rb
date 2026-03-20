@@ -1,5 +1,5 @@
 class CelebrityChartsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index]
+  skip_before_action :authenticate_user!, only: [:index, :number_values]
 
   def index
     @charts = CelebrityChart.eager_load(:celebrity)
@@ -11,7 +11,11 @@ class CelebrityChartsController < ApplicationController
     end
     @charts = @charts.page(params[:page])
 
-    @number_values = Number.order(:value).pluck(:value)
+    @number_values = fetch_number_values(params[:number_type])
+  end
+
+  def number_values
+    render partial: "number_value_select", locals: { number_values: fetch_number_values(params[:number_type]) }
   end
 
   helper_method :filtering?
@@ -20,5 +24,16 @@ class CelebrityChartsController < ApplicationController
 
   def filtering?
     params[:q].present? || params[:number_type].present? || params[:number_value].present?
+  end
+
+  def fetch_number_values(number_type)
+    if number_type.present?
+      Number.joins(numerology_numbers: :number_type)
+            .where(number_types: { name: number_type })
+            .order(:value)
+            .pluck(:value)
+    else
+      Number.order(:value).pluck(:value)
+    end
   end
 end

@@ -1,14 +1,22 @@
 .pt-8.md:pt-20.px-4.md:px-16.w-full.items-center
   .w-full.flex.border-b.mb-4.p-4
     .text-2xl.font-semibold Celebrity Charts
-  = form_with url: celebrity_charts_path, method: :get, class: "mb-4 px-4", data: { turbo_frame: "celebrity_charts_results" } do |f|
-    .flex.flex-col.gap-2
-      = f.text_field :q, value: params[:q], placeholder: "Search by name...", class: "border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-300"
-      .flex.gap-2
-        = f.select :number_type, options_for_select(NumberType::HUMAN_NAMES.map { |k, v| [v, k] }, params[:number_type]), { include_blank: "All Types" }, class: "border rounded-lg px-3 py-2 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-300"
-        = f.select :number_value, options_for_select(@number_values, params[:number_value]&.to_i), { include_blank: "All Values" }, class: "border rounded-lg px-3 py-2 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-300"
+  .mb-4.px-4.flex.flex-col.gap-2
+    = form_with url: celebrity_charts_path, method: :get, data: { controller: "auto-submit", auto_submit_delay_value: 300, turbo_frame: "celebrity_charts_results" } do |f|
+      .flex.flex-col.gap-1
+        = f.label :q, "Search", class: "text-sm font-medium text-gray-700"
+        = f.text_field :q, value: params[:q], placeholder: "Search by name...", class: "border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-300", data: { action: "input->auto-submit#submit" }
+    = form_with url: celebrity_charts_path, method: :get, data: { turbo_frame: "celebrity_charts_results", controller: "turbo-trigger", turbo_trigger_url_value: number_values_celebrity_charts_path, turbo_trigger_frame_id_value: "number_value_select" } do |f|
+      .flex.gap-2.items-end
+        .flex.flex-col.gap-1.flex-1
+          = f.label :number_type, "Number Type", class: "text-sm font-medium text-gray-700"
+          = f.select :number_type, options_for_select(NumberType::HUMAN_NAMES.map { |k, v| [v, k] }, params[:number_type]), { include_blank: "All Types" }, class: "border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed", data: { action: "change->turbo-trigger#trigger" }
+        .flex.flex-col.gap-1.flex-1
+          = f.label :number_value, "Value", class: "text-sm font-medium text-gray-700"
+          = turbo_frame_tag "number_value_select" do
+            = f.select :number_value, options_for_select(@number_values, params[:number_value]&.to_i), { include_blank: "All Values" }, class: "border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed"
         = render ButtonComponent.new(label: "Search", submit: true, variant: :secondary)
-        - if filtering?
-          = link_to "Clear", celebrity_charts_path, class: "px-4 py-2 text-gray-600 hover:underline whitespace-nowrap self-center", data: { turbo_frame: "celebrity_charts_results" }
+    - if filtering?
+      = link_to "Clear", celebrity_charts_path, class: "px-4 py-2 text-gray-600 hover:underline whitespace-nowrap self-start", data: { turbo_frame: "celebrity_charts_results" }
   = turbo_frame_tag "celebrity_charts_results" do
     = render "results", charts: @charts

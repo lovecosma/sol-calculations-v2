@@ -5,7 +5,7 @@ class ButtonComponent < ViewComponent::Base
 
   STYLES = {
     primary:   "bg-violet-500 hover:bg-violet-600 text-white border border-violet-500",
-    secondary: "bg-white hover:bg-violet-50 text-violet-600 border border-violet-500"
+    secondary: "bg-white hover:bg-violet-50 text-black border border-violet-500"
   }.freeze
 
   option :label
@@ -18,7 +18,7 @@ class ButtonComponent < ViewComponent::Base
   end
 
   def css_classes
-    classes = "font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline transition-colors"
+    classes = "font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline transition-colors self-end"
     classes += disabled ? " opacity-50 cursor-not-allowed" : " #{STYLES[variant]}"
     classes
   end
