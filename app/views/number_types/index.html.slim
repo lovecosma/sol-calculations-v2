@@ -1,0 +1,9 @@
+.pt-8.md:pt-20.px-4.md:px-16.w-full
+  .w-full.flex.border-b.mb-8.p-4
+    .text-2xl.font-semibold Numerology Number Types
+  .flex.flex-col.gap-8.px-4.md:px-8
+    - @number_types.each do |number_type|
+      .flex.flex-col.gap-2
+        = link_to number_type_path(number_type.name), class: "text-2xl font-semibold hover:underline" do
+          = NumberType::HUMAN_NAMES[number_type.name]
+        p.text-base.text-gray-700.leading-relaxed = number_type.thumbnail_description

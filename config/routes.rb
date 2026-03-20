@@ -6,8 +6,9 @@ Rails.application.routes.draw do
       get :number_values
     end
   end
+  get '/numerology/number_types', to: "number_types#index", as: :number_types
+  get '/numerology/number_types/:number_type', to: "number_types#show", as: :number_type
   get '/numerology/:number_type/:value', to: "numerology_numbers#show", as: :numerology_number
-  get '/numerology/:number_type', to: "number_types#show", as: :number_type
   # namespace "numerology" do
   #   get ':number_type/:value', to: "numerology_numbers#show", as: :numerology_number
   #   get ':number_type', to: "number_types#show", as: :number_type
