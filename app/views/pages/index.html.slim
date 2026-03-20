@@ -3,7 +3,20 @@
   .p-1.text-lg.mb-2
     = 'Discover the meaning behind your name and birthday with our numerology calculator.'
   .w-full
-    .flex.justify-center.p-1
+    .flex.justify-center.p-1.mb-6
       = image_tag 'hero-image.png', width: 620, height: 480
     = link_to new_chart_path do
-      = button_tag 'Get Started', class: 'mt-4 px-2 py-2 border border-violet-90 w-fit cursor-pointer'
+      = render ButtonComponent.new(label: "Calculate your chart", variant: :primary)
+  .grid.grid-cols-1.md:grid-cols-3.gap-10.p-4.mt-4.mx-auto
+    .flex.flex-col.items-center.justify-center.border.p-6.w-56.h-56.gap-3
+      .text-base.font-semibold.text-center What is Numerology?
+      = link_to about_path do
+        = render ButtonComponent.new(label: "Learn More", variant: :secondary)
+    .flex.flex-col.items-center.justify-center.border.p-6.h-56.gap-3
+      .text-base.font-semibold.text-center Learn About the Numbers
+      = link_to number_types_path do
+        = render ButtonComponent.new(label: "Explore", variant: :secondary)
+    .flex.flex-col.items-center.justify-center.border.p-6.h-56.gap-3
+      .text-base.font-semibold.text-center Explore Celebrity Charts
+      = link_to celebrity_charts_path do
+        = render ButtonComponent.new(label: "Explore", variant: :secondary)

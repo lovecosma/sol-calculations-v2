@@ -18,7 +18,7 @@ class ButtonComponent < ViewComponent::Base
   end
 
   def css_classes
-    classes = "font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline transition-colors self-end"
+    classes = "font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline transition-colors self-end cursor-pointer"
     classes += disabled ? " opacity-50 cursor-not-allowed" : " #{STYLES[variant]}"
     classes
   end
