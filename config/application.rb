@@ -27,8 +27,8 @@ module SolCalculations
 
     # Validate required environment variables after initialization
     config.after_initialize do
-      # Skip validation in asset precompilation and db tasks
-      next if defined?(Rails::Console) || File.split($0).last == "rake"
+      # Skip validation in asset precompilation, db tasks, and test environment
+      next if defined?(Rails::Console) || File.split($0).last == "rake" || Rails.env.test?
 
       required_env_vars = {
         "OPEN_AI_SECRET_KEY" => "OpenAI API key for generating numerology descriptions"
