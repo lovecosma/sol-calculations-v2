@@ -33,6 +33,6 @@ class NumerologyNumbersController < ApplicationController
     @matches = NumerologyNumber.includes(:number, :number_type)
                                 .where(number_type: @number_type, number: { value: @numerology_number.match_ids })
     @mismatches = NumerologyNumber.includes(:number, :number_type)
-                                  .where(number_type: @number_type, number: { value: @numerology_number.mismatch_ids })
+                                .where(number_type: @number_type, number: { value: @numerology_number.mismatch_ids })
   end
 end

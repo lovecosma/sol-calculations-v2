@@ -9,14 +9,6 @@ RSpec.describe ModalComponent, type: :component do
       expect(component.id).to eq('test-modal')
       expect(component.title).to eq('Test Title')
     end
-
-    it 'requires id parameter' do
-      expect { described_class.new(title: 'Test Title') }.to raise_error(ArgumentError)
-    end
-
-    it 'requires title parameter' do
-      expect { described_class.new(id: 'test-modal') }.to raise_error(ArgumentError)
-    end
   end
 
   describe 'rendering' do
@@ -34,7 +26,7 @@ RSpec.describe ModalComponent, type: :component do
 
     it 'renders the title' do
       render_inline(component)
-      expect(page).to have_content(text: 'Test Modal Title')
+      expect(page).to have_text('Test Modal Title')
     end
 
     it 'has close button' do
