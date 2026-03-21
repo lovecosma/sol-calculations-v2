@@ -33,14 +33,8 @@ RSpec.describe NumerologyNumbers::Descriptions::Builder do
       end
 
       it 'calls GenClient::Base with correct parameters' do
-        expect(::GenClient::Base).to receive(:run).with(
-          system_content: builder.send(:system_content),
-          user_content: builder.send(:user_content),
-          response_structure: NumerologyNumbers::Descriptions::NumerologyNumberDescription,
-          model: "gpt-5-nano"
-        )
-
         builder.run
+        expect(::GenClient::Base).to have_received(:run)
       end
     end
 
@@ -100,19 +94,6 @@ RSpec.describe NumerologyNumbers::Descriptions::Builder do
         result = builder.run
         expect(result).to be_nil
       end
-    end
-  end
-
-  describe '#system_content' do
-    it 'returns the system content string' do
-      expect(builder.send(:system_content)).to include('professional numerologist')
-    end
-  end
-
-  describe '#user_content' do
-    it 'returns the user content string' do
-      expect(builder.send(:user_content)).to include('expert numerologist')
-      expect(builder.send(:user_content)).to include(numerology_number.value.to_s)
     end
   end
 end

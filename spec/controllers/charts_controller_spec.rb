@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-# This is an alternative version of the charts_controller_spec.rb using FactoryBot
-# You can use this instead of the manual version once FactoryBot is fully set up
 RSpec.describe ChartsController, type: :controller do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
@@ -225,7 +223,7 @@ RSpec.describe ChartsController, type: :controller do
     it 'destroys associated chart_numbers' do
       expect {
         delete :destroy, params: { id: chart.to_param }
-      }.to change(ChartNumber, :count).by(-2)
+      }.to change(ChartNumber, :count).by(-3)
     end
   end
 

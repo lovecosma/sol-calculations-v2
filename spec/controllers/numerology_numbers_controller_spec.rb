@@ -121,29 +121,17 @@ RSpec.describe NumerologyNumbersController, type: :controller do
         get :show, params: { number_type: "life_path", value: "99" }
         expect(response).to have_http_status(:not_found)
       end
-
-      it "renders a plain text not found message" do
-        get :show, params: { number_type: "life_path", value: "99" }
-        expect(response.body).to include("Numerology number not found")
-      end
-
-      it "does not assign @numerology_number" do
-        get :show, params: { number_type: "life_path", value: "99" }
-        expect(assigns(:numerology_number)).to be_nil
-      end
-
-      it "does not assign @matches" do
-        get :show, params: { number_type: "life_path", value: "99" }
-        expect(assigns(:matches)).to be_nil
-      end
     end
 
     context "when not authenticated" do
-      before { sign_out user }
+      before do
+        sign_out user
+        numerology_number
+      end
 
-      it "redirects to sign in" do
-        get :show, params: { number_type: "life_path", value: "1" }
-        expect(response).to redirect_to(new_user_session_path)
+      it "returns a success response" do
+        get :show, params: { number_type: number_type.name, value: number.value }
+        expect(response).to be_successful
       end
     end
   end

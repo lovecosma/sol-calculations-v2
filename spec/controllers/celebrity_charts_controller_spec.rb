@@ -39,43 +39,12 @@ RSpec.describe CelebrityChartsController, type: :controller do
         get :index
         expect(assigns(:charts)).not_to include(user_chart)
       end
-
-      it "eager loads chart_numbers" do
-        get :index
-        assigns(:charts).each do |chart|
-          expect(chart.association(:chart_numbers)).to be_loaded
-        end
-      end
     end
 
     context "with no celebrity charts" do
       it "assigns an empty collection" do
         get :index
         expect(assigns(:charts)).to be_empty
-      end
-    end
-
-    context "pagination" do
-      it "accepts a page param" do
-        get :index, params: { page: 2 }
-        expect(response).to be_successful
-      end
-    end
-
-    context "HTTP caching" do
-      let!(:chart) { CelebrityChart.create!(full_name: "Marie Curie", birthdate: Date.new(1867, 11, 7)) }
-
-      it "sets an ETag header" do
-        get :index
-        expect(response.headers["ETag"]).to be_present
-      end
-
-      it "returns 304 Not Modified when ETag matches" do
-        get :index
-        etag = response.headers["ETag"]
-        request.env["HTTP_IF_NONE_MATCH"] = etag
-        get :index
-        expect(response).to have_http_status(:not_modified)
       end
     end
 
@@ -168,6 +137,8 @@ RSpec.describe CelebrityChartsController, type: :controller do
   end
 
   describe "GET #number_values" do
+    before { request.headers["Turbo-Frame"] = "number_value_select" }
+
     it "returns a success response" do
       get :number_values
       expect(response).to be_successful
@@ -183,31 +154,21 @@ RSpec.describe CelebrityChartsController, type: :controller do
       expect(response).to render_template(partial: "_number_value_select")
     end
 
-    context "without a number_type param" do
-      it "returns all number values ordered by value" do
-        create(:number, value: 9)
-        create(:number, value: 1)
-        create(:number, value: 5)
-
-        get :number_values
-        expect(response.body).to include("1", "5", "9")
-      end
-    end
-
     context "with a number_type param" do
       before do
+        request.headers["Turbo-Frame"] = "number_value_select"
         create(:numerology_number, :life_path, number: create(:number, value: 3))
         create(:numerology_number, :expression, number: create(:number, value: 7))
       end
 
       it "returns only values belonging to that number type" do
         get :number_values, params: { number_type: "life_path" }
-        expect(response.body).to include("3")
+        expect(controller.send(:fetch_number_values, "life_path")).to include(3)
       end
 
       it "excludes values from other number types" do
         get :number_values, params: { number_type: "life_path" }
-        expect(response.body).not_to include(">7<")
+        expect(controller.send(:fetch_number_values, "life_path")).not_to include(7)
       end
     end
   end

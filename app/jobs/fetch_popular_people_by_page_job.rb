@@ -16,7 +16,7 @@ class FetchPopularPeopleByPageJob < ApplicationJob
     Celebrity.upsert_all(
       valid_attrs,
       unique_by: :external_id,
-      update_only: %i[original_name birthdate profile_path popularity]
+      update_only: %i(original_name birthdate profile_path popularity)
     )
   end
 end

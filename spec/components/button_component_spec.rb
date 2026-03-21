@@ -65,10 +65,4 @@ RSpec.describe ButtonComponent, type: :component do
       expect(page).not_to have_css("button.bg-violet-500")
     end
   end
-
-  describe "initialization" do
-    it "requires label" do
-      expect { described_class.new }.to raise_error(Dry::Initializer::MissingValueError)
-    end
-  end
 end

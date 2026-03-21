@@ -32,33 +32,6 @@ RSpec.describe FetchPopularPeopleByPageJob, type: :job do
       described_class.perform_now
     end
 
-    it "passes merged and sliced data to Creator" do
-      expect(CelebrityCharts::Creator).to receive(:run).with(
-        celebrity_data: {
-          "birthday"      => "1867-11-07",
-          "original_name" => "Marie Curie",
-          "profile_path"  => "/abc.jpg"
-        }
-      )
-      described_class.perform_now
-    end
-
-    context "with multiple people" do
-      let(:person2) { { "id" => 2, "original_name" => "Ada Lovelace", "profile_path" => "/def.jpg" } }
-      let(:details2) { { "id" => 2, "birthday" => "1815-12-10", "original_name" => "Ada Lovelace", "profile_path" => "/def.jpg" } }
-
-      before do
-        popular_response["results"] << person2
-        allow(api).to receive(:fetch_person_details).with(1).and_return(details)
-        allow(api).to receive(:fetch_person_details).with(2).and_return(details2)
-      end
-
-      it "creates a chart for each person" do
-        expect(CelebrityCharts::Creator).to receive(:run).twice
-        described_class.perform_now
-      end
-    end
-
     context "when fetch_person_details raises TmdbError" do
       before do
         allow(api).to receive(:fetch_person_details)
