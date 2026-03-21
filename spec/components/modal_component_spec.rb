@@ -36,7 +36,7 @@ RSpec.describe ModalComponent, type: :component do
       render_inline(component)
       expect(page).to have_content(text: 'Test Modal Title')
     end
-    
+
     it 'has close button' do
       render_inline(component)
       expect(page).to have_css('button[data-action="click->modal#close"]')
@@ -89,7 +89,7 @@ RSpec.describe ModalComponent, type: :component do
       expect(page).to have_css('.space-y-3.text-sm.text-gray-700', text: 'Modal content')
     end
   end
-  
+
 
   describe 'accessibility' do
     let(:component) { described_class.new(id: 'test-modal', title: 'Test Modal') }

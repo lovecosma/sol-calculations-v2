@@ -31,7 +31,7 @@ RSpec.describe CelebrityChartsController, type: :controller do
 
       it "orders @charts by created_at descending" do
         get :index
-        expect(assigns(:charts).to_a).to eq([newer_chart, older_chart])
+        expect(assigns(:charts).to_a).to eq([ newer_chart, older_chart ])
       end
 
       it "does not include UserChart records" do
@@ -162,7 +162,7 @@ RSpec.describe CelebrityChartsController, type: :controller do
         NumerologyNumber.find_or_create_by!(number: number_9, number_type: other_type)
 
         get :index, params: { number_type: "life_path" }
-        expect(assigns(:number_values)).to eq([5])
+        expect(assigns(:number_values)).to eq([ 5 ])
       end
     end
   end

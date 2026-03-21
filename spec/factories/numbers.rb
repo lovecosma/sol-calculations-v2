@@ -5,7 +5,7 @@ FactoryBot.define do
     initialize_with { Number.find_or_create_by(value: value) }
 
     trait :master_number do
-      value { [11, 22, 33].sample }
+      value { [ 11, 22, 33 ].sample }
     end
 
     trait :specific_value do

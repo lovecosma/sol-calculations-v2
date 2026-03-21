@@ -7,7 +7,7 @@ RSpec.describe FetchPopularPeopleByPageJob, type: :job do
 
   let(:person) { { "id" => 1, "original_name" => "Marie Curie", "profile_path" => "/abc.jpg" } }
   let(:details) { { "id" => 1, "birthday" => "1867-11-07", "original_name" => "Marie Curie", "profile_path" => "/abc.jpg" } }
-  let(:popular_response) { { "results" => [person] } }
+  let(:popular_response) { { "results" => [ person ] } }
 
   before do
     allow(CelebrityCharts::Api).to receive(:new).and_return(api)

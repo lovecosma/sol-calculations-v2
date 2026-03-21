@@ -10,7 +10,7 @@ class FetchPopularPeopleJob < ApplicationJob
   def perform(limit:)
     api = CelebrityCharts::Api.new
     total_pages = api.fetch_popular_people(1)["total_pages"]
-    pages = [limit, total_pages].min
+    pages = [ limit, total_pages ].min
 
     (1..pages).each do |page|
       FetchPopularPeopleByPageJob.perform_later(page)

@@ -6,7 +6,7 @@ class Chart < ApplicationRecord
 
   scope :search_by_name, ->(q) { where("charts.full_name ILIKE ?", "%#{q}%") }
   scope :with_number, ->(type, value) {
-    where(id: ChartNumber.joins(numerology_number: [:number_type, :number])
+    where(id: ChartNumber.joins(numerology_number: [ :number_type, :number ])
                          .where(number_types: { name: type }, numbers: { value: value })
                          .select(:chart_id))
   }
@@ -16,23 +16,23 @@ class Chart < ApplicationRecord
   before_validation :strip_name_affixes
   validate :validate_full_name_format
 
-  after_commit :build_numbers, on: [:create, :update], if: :should_build_numbers?
+  after_commit :build_numbers, on: [ :create, :update ], if: :should_build_numbers?
 
   def first_name
     name_parts.first
   end
 
   def middle_name
-    name_parts[1] || ''
+    name_parts[1] || ""
   end
 
   def last_name
-    name_parts.size > 1 ? name_parts.last : ''
+    name_parts.size > 1 ? name_parts.last : ""
   end
 
   def normalized_name
     # Convert to uppercase and remove all non-letter characters for numerology calculations
-    full_name.upcase.gsub(/[^A-Z]/, '')
+    full_name.upcase.gsub(/[^A-Z]/, "")
   end
 
   private
@@ -58,7 +58,7 @@ class Chart < ApplicationRecord
     end
 
     # Normalize multiple spaces to single space
-    self.full_name = full_name.squeeze(' ').strip
+    self.full_name = full_name.squeeze(" ").strip
   end
 
   def name_parts

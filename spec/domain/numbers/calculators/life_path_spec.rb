@@ -8,14 +8,14 @@ RSpec.describe Numbers::Calculators::LifePath do
 
   describe '#run' do
     context 'with regular birthdate' do
-      let(:chart) { create(:chart, us er: user, birthdate: Date.new(1990, 5, 15)) }
+      let(:chart) { create(:chart, user: user, birthdate: Date.new(1990, 5, 15)) }
 
       it 'calculates life path number' do
         # 1990-05-15 → 5+1+5+1+9+9+0 = 30 → 3+0 = 3
         expect(calculator.run).to eq(3)
       end
     end
-    
+
     context 'with master number 11' do
       let(:chart) { create(:chart, user: user, birthdate: Date.new(1990, 1, 18)) }
 

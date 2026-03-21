@@ -12,7 +12,7 @@ RSpec.describe NumberTypesController, type: :controller do
       first  = create(:number_type).tap { |nt| nt.update_column(:position, 1) }
 
       get :index
-      expect(assigns(:number_types).to_a).to eq([first, second])
+      expect(assigns(:number_types).to_a).to eq([ first, second ])
     end
   end
 
@@ -34,7 +34,7 @@ RSpec.describe NumberTypesController, type: :controller do
       low  = create(:numerology_number, number_type: number_type, number: create(:number, value: 1))
 
       get :show, params: { number_type: number_type.name }
-      expect(assigns(:numerology_numbers).to_a).to eq([low, high])
+      expect(assigns(:numerology_numbers).to_a).to eq([ low, high ])
     end
 
     it "only assigns numerology numbers for the given number type" do

@@ -22,13 +22,13 @@ FactoryBot.define do
 
     trait :with_description do
       primary_title { "The Leader" }
-      secondary_titles { ["The Pioneer", "The Initiator"] }
+      secondary_titles { [ "The Pioneer", "The Initiator" ] }
       thumbnail_description { "A natural leader with strong independence and initiative." }
-      core_essence { ["Natural leadership", "Independent thinking"] }
-      strengths { ["Confident", "Innovative", "Courageous"] }
-      challenges { ["Impatient", "Stubborn", "Overly competitive"] }
-      matches { [3, 5, 7] }
-      mismatches { [2, 4, 8] }
+      core_essence { [ "Natural leadership", "Independent thinking" ] }
+      strengths { [ "Confident", "Innovative", "Courageous" ] }
+      challenges { [ "Impatient", "Stubborn", "Overly competitive" ] }
+      matches { [ 3, 5, 7 ] }
+      mismatches { [ 2, 4, 8 ] }
       description { "This number embodies leadership and independence. People with this number are natural pioneers who forge their own path." }
     end
 

@@ -20,7 +20,7 @@ RSpec.describe NameNormalizable do
         'Prof Sarah Lee'     => 'Sarah Lee',
         'Sir Walter Scott'   => 'Walter Scott',
         'Lady Diana Spencer' => 'Diana Spencer',
-        'Lord Byron'         => 'Byron',
+        'Lord Byron'         => 'Byron'
       }.each do |input, expected|
         it "strips '#{input.split.first}' prefix" do
           expect(host.strip_affixes(input)).to eq(expected)
@@ -43,7 +43,7 @@ RSpec.describe NameNormalizable do
         'John Adams PhD.'    => 'John Adams',
         'John Adams MD'      => 'John Adams',
         'John Adams Esq'     => 'John Adams',
-        'John Adams JD'      => 'John Adams',
+        'John Adams JD'      => 'John Adams'
       }.each do |input, expected|
         it "strips '#{input.split.last.delete('.,').rstrip}' suffix" do
           expect(host.strip_affixes(input)).to eq(expected)

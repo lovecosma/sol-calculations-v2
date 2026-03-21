@@ -7,6 +7,6 @@ module NameNormalizable
   SUFFIXES = /[\s,]+(Jr|Sr|II|III|IV|V|VI|VII|VIII|IX|X|PhD|MD|Esq|DDS|DVM|JD)\.?\z/i
 
   def strip_affixes(name)
-    name.gsub(PREFIXES, '').gsub(SUFFIXES, '').strip
+    name.gsub(PREFIXES, "").gsub(SUFFIXES, "").strip
   end
 end

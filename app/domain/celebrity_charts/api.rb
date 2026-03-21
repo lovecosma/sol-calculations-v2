@@ -11,7 +11,7 @@ module CelebrityCharts
 
     BASE_URL = "https://api.themoviedb.org/3"
 
-    option :language,optional: true, default: -> { "en-US" }
+    option :language, optional: true, default: -> { "en-US" }
 
     def fetch_popular_people(page = 1)
       uri = URI("#{BASE_URL}/person/popular")

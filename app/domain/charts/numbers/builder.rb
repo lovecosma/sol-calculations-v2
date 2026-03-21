@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Charts
   module Numbers
     class Builder
@@ -8,11 +9,11 @@ module Charts
 
 
       CALCULATORS = {
-        'life_path' => ::Numbers::Calculators::LifePath,
-        'expression' => ::Numbers::Calculators::Expression,
-        'soul_urge' => ::Numbers::Calculators::SoulUrge,
-        'personality' => ::Numbers::Calculators::Personality,
-        'birthday' => ::Numbers::Calculators::Birthday
+        "life_path" => ::Numbers::Calculators::LifePath,
+        "expression" => ::Numbers::Calculators::Expression,
+        "soul_urge" => ::Numbers::Calculators::SoulUrge,
+        "personality" => ::Numbers::Calculators::Personality,
+        "birthday" => ::Numbers::Calculators::Birthday
       }
 
       def run
@@ -39,7 +40,7 @@ module Charts
         pairs = calculated_values.filter_map do |type_name, value|
           type_id = number_types[type_name]&.id
           num_id = numbers[value]&.id
-          [type_id, num_id] if type_id && num_id
+          [ type_id, num_id ] if type_id && num_id
         end
 
         return [] if pairs.empty?

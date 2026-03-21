@@ -321,7 +321,7 @@ RSpec.describe Chart, type: :model do
 
         chart.update(full_name: 'Jane Smith')
       end
-      
+
       it 'destroys old chart numbers before rebuilding' do
         allow(chart.chart_numbers).to receive(:destroy_all).and_call_original
         chart.update(full_name: 'Jane Smith')

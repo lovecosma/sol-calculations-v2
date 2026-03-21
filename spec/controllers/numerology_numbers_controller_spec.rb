@@ -6,7 +6,7 @@ RSpec.describe NumerologyNumbersController, type: :controller do
   let(:number)      { create(:number, value: 1) }
   let(:numerology_number) do
     create(:numerology_number, number: number, number_type: number_type).tap do |nn|
-      nn.update!(matches: [3, 5], mismatches: [2, 4])
+      nn.update!(matches: [ 3, 5 ], mismatches: [ 2, 4 ])
     end
   end
 

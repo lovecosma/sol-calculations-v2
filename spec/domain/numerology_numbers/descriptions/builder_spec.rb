@@ -11,13 +11,13 @@ RSpec.describe NumerologyNumbers::Descriptions::Builder do
       let(:valid_response_data) do
         {
           'primary_title' => 'The Leader',
-          'secondary_titles' => ['The Pioneer', 'The Initiator', 'The Trailblazer'],
+          'secondary_titles' => [ 'The Pioneer', 'The Initiator', 'The Trailblazer' ],
           'thumbnail_description' => 'A natural leader with strong independence and initiative.',
-          'core_essence' => ['Natural leadership', 'Independent thinking', 'Strong will'],
-          'strengths' => %w(Confident Innovative Courageous Determined),
-          'challenges' => ['Impatient', 'Stubborn', 'Overly competitive'],
-          'matches' => %w(3 5 7),
-          'mismatches' => %w(2 4 8),
+          'core_essence' => [ 'Natural leadership', 'Independent thinking', 'Strong will' ],
+          'strengths' => %w[Confident Innovative Courageous Determined],
+          'challenges' => [ 'Impatient', 'Stubborn', 'Overly competitive' ],
+          'matches' => %w[3 5 7],
+          'mismatches' => %w[2 4 8],
           'description' => 'This number embodies leadership and independence.'
         }
       end
