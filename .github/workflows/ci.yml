@@ -73,6 +73,9 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
           # REDIS_URL: redis://localhost:6379/0
         run: bundle exec rails db:test:prepare test test:system
 
