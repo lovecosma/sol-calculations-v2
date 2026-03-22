@@ -1,12 +1,12 @@
 .flex.flex-col.justify-center.text-center
   .p-2.mt-6.text-2xl.lg:text-3xl Welcome to Sol Calculations!
-  .p-1.text-lg.mb-2
+  .p-1.text-lg.mb-6
     = 'Discover the meaning behind your name and birthday with our numerology calculator.'
   .w-full
-    .flex.justify-center.p-1.mb-6
-      = image_tag 'hero-image.png', width: 620, height: 480
     = link_to new_chart_path do
       = render ButtonComponent.new(label: "Calculate your chart", variant: :primary)
+    .flex.justify-center.p-1.my-6
+      = image_tag 'hero-image.png', width: 620, height: 480
   .grid.grid-cols-1.md:grid-cols-3.gap-10.p-4.mt-4.mx-auto
     .flex.flex-col.items-center.justify-center.border.p-6.h-56.gap-3
       .text-base.font-semibold.text-center What is Numerology?
