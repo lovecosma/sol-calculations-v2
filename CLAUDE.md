@@ -35,7 +35,7 @@ Charts use STI: `UserChart < Chart` (owned by a user) and `CelebrityChart < Char
 
 ```
 Chart → ChartNumber → NumerologyNumber → Number (value 1–33)
-                                       → NumberType (life_path, expression, soul_urge, personality, birthday)
+                                       → NumberType (life_path, expression, soul_urge, personality, birthday etc)
 ```
 
 `Number` and `NumberType` rows are shared across all charts. `NumerologyNumber` is the intersection — it holds content (descriptions, titles) for a specific number+type combination.
@@ -60,5 +60,8 @@ Domain logic lives in `app/domain/`, not in models or controllers:
 - Factories use `find_or_create_by` for lookup tables (`Number`, `NumberType`, `NumerologyNumber`) to avoid uniqueness conflicts
 - Stimulus controllers have Jest unit tests in `spec/javascript/controllers/`; complex interaction tests use Playwright in `e2e/`
 - E2E tests authenticate once via global setup and reuse `e2e/.auth-state.json`
-- Prefer using factories when there is no strong tradeoff.
-- Prefer one assertion per test.
+- Use factories when there is no strong tradeoff to do otherwise. If no factory exists, create it. If a factory needs an extension, use the most idiomatic solution given the object relationships.
+- Use one assertion per spec.
+- Don't run specs unless I ask you to directly; instead, just give me the command to run the specs myself when you would typically run specs.
+- Never use hardcoded magic number. Instead, favour a dynamic value derived from the actual test state.
+- Make sure specs are idiomatic.
