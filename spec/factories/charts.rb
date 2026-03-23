@@ -1,4 +1,9 @@
 FactoryBot.define do
+  factory :celebrity_chart, class: CelebrityChart do
+    full_name { "#{Faker::Name.first_name} #{Faker::Name.last_name}" }
+    birthdate { Faker::Date.between(from: 60.years.ago, to: 18.years.ago) }
+  end
+
   factory :chart, class: UserChart do
     user
     full_name { "#{Faker::Name.first_name} #{Faker::Name.last_name}" }
