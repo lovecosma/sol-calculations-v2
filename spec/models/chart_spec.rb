@@ -17,6 +17,59 @@ RSpec.describe Chart, type: :model do
     end
   end
 
+  describe '#displayable_chart_numbers' do
+    before { allow(Charts::Numbers::Builder).to receive(:run) }
+
+    let(:chart) { create(:chart, user: user) }
+
+    it 'returns chart numbers with description and thumbnail_description' do
+      nn = create(:numerology_number, :life_path, :with_description)
+      cn = create(:chart_number, chart: chart, numerology_number: nn)
+
+      expect(chart.displayable_chart_numbers).to include(cn)
+    end
+
+    it 'excludes chart numbers with no description' do
+      nn = create(:numerology_number, :life_path, description: nil, thumbnail_description: "short")
+      cn = create(:chart_number, chart: chart, numerology_number: nn)
+
+      expect(chart.displayable_chart_numbers).not_to include(cn)
+    end
+
+    it 'excludes chart numbers with no thumbnail_description' do
+      nn = create(:numerology_number, :life_path, description: "full text", thumbnail_description: nil)
+      cn = create(:chart_number, chart: chart, numerology_number: nn)
+
+      expect(chart.displayable_chart_numbers).not_to include(cn)
+    end
+
+    it 'excludes chart numbers where both are blank' do
+      nn = create(:numerology_number, :life_path, description: nil, thumbnail_description: nil)
+      cn = create(:chart_number, chart: chart, numerology_number: nn)
+
+      expect(chart.displayable_chart_numbers).not_to include(cn)
+    end
+
+    it 'excludes chart numbers of non-displayable types' do
+      personal_year_type = NumberType.find_or_create_by!(name: "personal_year")
+      nn = create(:numerology_number, :with_description, number_type: personal_year_type)
+      cn = create(:chart_number, chart: chart, numerology_number: nn)
+
+      expect(chart.displayable_chart_numbers).not_to include(cn)
+    end
+
+    it 'orders by number_type position' do
+      first_type  = create(:number_type).tap { |nt| nt.update_column(:position, 1) }
+      second_type = create(:number_type, :expression).tap { |nt| nt.update_column(:position, 2) }
+      nn_first  = create(:numerology_number, :with_description, number_type: first_type)
+      nn_second = create(:numerology_number, :with_description, number_type: second_type)
+      cn_first  = create(:chart_number, chart: chart, numerology_number: nn_first)
+      cn_second = create(:chart_number, chart: chart, numerology_number: nn_second)
+
+      expect(chart.displayable_chart_numbers.to_a).to eq([ cn_first, cn_second ])
+    end
+  end
+
   describe 'validations' do
     it 'validates presence of full_name' do
       chart = build(:chart, user: user, full_name: nil)

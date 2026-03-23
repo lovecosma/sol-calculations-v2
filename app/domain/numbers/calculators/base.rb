@@ -53,6 +53,12 @@ module Numbers
         total
       end
 
+      def reduce_to_single_digit_strict(array_of_numbers)
+        total = array_of_numbers.sum
+        total = total.to_s.chars.map(&:to_i).sum while total > 9
+        total
+      end
+
       def filter_vowels(value)
         value.gsub(/[^aeiou]/i, "")
       end

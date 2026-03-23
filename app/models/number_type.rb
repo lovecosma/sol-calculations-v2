@@ -6,7 +6,8 @@ class NumberType < ApplicationRecord
     "expression" => "Expression",
     "soul_urge" => "Soul Urge",
     "personality" => "Personality",
-    "birthday" => "Birthday"
+    "birthday" => "Birthday",
+    "personal_year" => "Personal Year"
   }.freeze
   validates :name, presence: true, uniqueness: true, inclusion: { in: HUMAN_NAMES.keys }
 end

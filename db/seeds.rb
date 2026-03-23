@@ -11,13 +11,7 @@ NumerologyNumber.destroy_all
 NumberType.destroy_all
 Number.destroy_all
 
-number_types = %w[
-  life_path
-  expression
-  soul_urge
-  personality
-  birthday
-]
+number_types = Charts::Numbers::Builder::CALCULATORS.keys
 number_types.each.with_index do |type_name, index|
 NumberType.find_or_create_by(name: type_name, position: index)
 end

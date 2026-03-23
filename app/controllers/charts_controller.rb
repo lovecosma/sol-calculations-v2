@@ -1,14 +1,14 @@
 class ChartsController < ApplicationController
   def index
     @charts = current_user.user_charts
-      .includes(chart_numbers: { numerology_number: [ :number_type, :number ] })
+      .preload(displayable_chart_numbers: { numerology_number: [ :number_type, :number ] })
       .order(created_at: :desc)
       .page(params[:page])
   end
 
   def show
     @chart = current_user.user_charts
-      .includes(chart_numbers: { numerology_number: [ :number_type, :number ] })
+      .preload(displayable_chart_numbers: { numerology_number: [ :number_type, :number ] })
       .find(params[:id])
   end
 
