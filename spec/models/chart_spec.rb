@@ -51,7 +51,7 @@ RSpec.describe Chart, type: :model do
     end
 
     it 'excludes chart numbers of non-displayable types' do
-      personal_year_type = NumberType.find_or_create_by!(name: "personal_year")
+      personal_year_type = create(:number_type, :personal_year)
       nn = create(:numerology_number, :with_description, number_type: personal_year_type)
       cn = create(:chart_number, chart: chart, numerology_number: nn)
 

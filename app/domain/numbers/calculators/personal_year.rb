@@ -3,12 +3,8 @@
 module Numbers
   module Calculators
     class PersonalYear < Base
-      option :year, Types::Coercible::Integer, default: proc { Date.today.year }
-
       def run
-        return if birthdate.blank?
-
-        digits = [ birthdate.month, birthdate.day, year ]
+        digits = [ birthdate.month, birthdate.day, Date.today.year ]
           .flat_map { |part| part.to_s.chars.map(&:to_i) }
         reduce_to_single_digit_strict(digits)
       end

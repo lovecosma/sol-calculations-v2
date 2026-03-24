@@ -1,6 +1,8 @@
 class NumberType < ApplicationRecord
   has_many :numerology_numbers
 
+  NON_DISPLAYABLE_TYPES = %w[personal_year].freeze
+
   HUMAN_NAMES = {
     "life_path" => "Life Path",
     "expression" => "Expression",

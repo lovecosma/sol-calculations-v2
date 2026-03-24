@@ -19,5 +19,9 @@ FactoryBot.define do
     trait :birthday do
       name { 'birthday' }
     end
+
+    trait :personal_year do
+      name { 'personal_year' }
+    end
   end
 end
