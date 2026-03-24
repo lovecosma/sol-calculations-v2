@@ -6,8 +6,8 @@ class ChartNumber < ApplicationRecord
   scope :displayable, -> {
     ordered
       .where.not(number_types: { name: NumberType::NON_DISPLAYABLE_TYPES })
-      .where.not(numerology_numbers: { description: [nil, ""] })
-      .where.not(numerology_numbers: { thumbnail_description: [nil, ""] })
+      .where.not(numerology_numbers: { description: [ nil, "" ] })
+      .where.not(numerology_numbers: { thumbnail_description: [ nil, "" ] })
   }
 
   delegate :number_type, to: :numerology_number
