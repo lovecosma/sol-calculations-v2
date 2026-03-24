@@ -2,7 +2,7 @@ class Chart < ApplicationRecord
   include NameNormalizable
 
   has_many :chart_numbers, dependent: :destroy
-  has_many :ordered_chart_numbers, -> { ordered }, class_name: "ChartNumber"
+  has_many :displayable_chart_numbers, -> { displayable }, class_name: "ChartNumber"
 
   scope :search_by_name, ->(q) { where("charts.full_name ILIKE ?", "%#{q}%") }
   scope :with_number, ->(type, value) {

@@ -13,7 +13,8 @@ module Charts
         "expression" => ::Numbers::Calculators::Expression,
         "soul_urge" => ::Numbers::Calculators::SoulUrge,
         "personality" => ::Numbers::Calculators::Personality,
-        "birthday" => ::Numbers::Calculators::Birthday
+        "birthday" => ::Numbers::Calculators::Birthday,
+        "personal_year" => ::Numbers::Calculators::PersonalYear
       }
 
       def run
